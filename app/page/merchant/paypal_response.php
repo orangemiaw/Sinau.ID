@@ -59,20 +59,19 @@ try {
 
             $update = $db->update("participants", array("participant_group_id" => $explodeInvoice[1]), array("participant_id" => $data['participant_id']));
             $insert = $db->insert("payments", $data);
-
-            // Rewrite session group_id
-            require PATH_MODEL . 'model_participant_group.php';
-            $m_participant_group = new model_participant_group($db);
-            $arr_participant_group = $m_participant_group->get_row(array("participant_group_id" => $explodeInvoice[1]));
-
-            $_SESSION['group'] = $arr_participant_group['participant_group_name'];
-            $_SESSION['group_id'] = $explodeInvoice[1];
             
             if(!$insert || !$update) {
                 $notice->addError("Query failed !");
                 header("location:".HTTP."?page=upgrade");
                 return;
             }
+
+            // Rewrite session group_id
+            require PATH_MODEL . 'model_participant_group.php';
+            $m_participant_group    = new model_participant_group($db);
+            $arr_participant_group  = $m_participant_group->get_row(array("participant_group_id" => $explodeInvoice[1]));
+            $_SESSION['group']      = $arr_participant_group['participant_group_name'];
+            $_SESSION['group_id']   = $arr_participant_group['participant_group_id'];
 
             $notice->addSuccess("Payment successfully and your account has been upgraded !");
             header("location:".HTTP."?page=dashboard");

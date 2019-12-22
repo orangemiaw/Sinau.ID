@@ -40,9 +40,6 @@ $paypalConfig = [
 
 $apiContext = getApiContext($paypalConfig['client_id'], $paypalConfig['client_secret'], $paypalConfig['enable_sandbox']);
 
-// var_dump($paypalConfig);
-// die();
-
 if($paymentMethod == 'paypal') {
     $payer = new Payer();
     $payer->setPaymentMethod('paypal');
@@ -80,6 +77,14 @@ if($paymentMethod == 'paypal') {
     }
 
     header('Location:' . $payment->getApprovalLink());
+    return;
+} elseif($paymentMethod == 'ovo') {
+    $_SESSION['tmp_upgrade'] = $upgradeTo;
+    header("Location:".HTTP."?merchant=ovo_step1");
+    return;
+} else {
+    $notice->addError("Invalid payment method !");
+    header("Location:".HTTP."?page=upgrade");
     return;
 }
 
