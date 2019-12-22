@@ -79,24 +79,45 @@ $arr_payment = $m_payment->get_results(array(), 1, 10);
                         </div>
                     </div>
                     <!-- col-3 -->
-                    <div class="col-sm-6 col-xl-3 mg-t-20 mg-xl-t-0">
-                        <div class="bg-primary rounded overflow-hidden">
-                        <div class="pd-x-20 pd-t-20 d-flex align-items-center">
-                            <i class="ion ion-ios-cash tx-60 lh-0 tx-white op-7"></i>
-                            <div class="mg-l-20">
-                                <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Earnings</p>
-                                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?=convert_to_rupiah($m_dashboard->total_earning());?></p>
+                    <?php if ($_SESSION['is_admin']): ?>
+                        <div class="col-sm-6 col-xl-3 mg-t-20 mg-xl-t-0">
+                            <div class="bg-primary rounded overflow-hidden">
+                            <div class="pd-x-20 pd-t-20 d-flex align-items-center">
+                                <i class="ion ion-ios-cash tx-60 lh-0 tx-white op-7"></i>
+                                <div class="mg-l-20">
+                                    <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Earnings</p>
+                                    <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?=convert_to_rupiah($m_dashboard->total_earning());?></p>
+                                </div>
+                            </div>
+                            <div id="ch4" class="ht-50 tr-y-1 rickshaw_graph">
+                                <svg width="395" height="50">
+                                    <g>
+                                        <path d="M0,25Q28.52777777777778,21.458333333333332,32.916666666666664,21.875C39.49999999999999,22.5,59.24999999999999,30.9375,65.83333333333333,31.25S92.16666666666667,26.25,98.75,25S125.08333333333333,18.75,131.66666666666666,18.75S158,23.125,164.58333333333334,25S190.91666666666666,35.625,197.5,37.5S223.83333333333334,43.75,230.41666666666669,43.75S256.75,38.4375,263.3333333333333,37.5S289.6666666666667,35.3125,296.25,34.375S322.58333333333337,27.8125,329.1666666666667,28.125S355.5,37.8125,362.0833333333333,37.5Q366.47222222222223,37.291666666666664,395,25L395,50Q366.47222222222223,50,362.0833333333333,50C355.5,50,335.75,50,329.1666666666667,50S302.8333333333333,50,296.25,50S269.91666666666663,50,263.3333333333333,50S237.00000000000003,50,230.41666666666669,50S204.08333333333334,50,197.5,50S171.16666666666669,50,164.58333333333334,50S138.25,50,131.66666666666666,50S105.33333333333333,50,98.75,50S72.41666666666666,50,65.83333333333333,50S39.49999999999999,50,32.916666666666664,50Q28.52777777777778,50,0,50Z" class="area" fill="rgba(255,255,255,0.5)"></path>
+                                    </g>
+                                </svg>
+                            </div>
                             </div>
                         </div>
-                        <div id="ch4" class="ht-50 tr-y-1 rickshaw_graph">
-                            <svg width="395" height="50">
-                                <g>
-                                    <path d="M0,25Q28.52777777777778,21.458333333333332,32.916666666666664,21.875C39.49999999999999,22.5,59.24999999999999,30.9375,65.83333333333333,31.25S92.16666666666667,26.25,98.75,25S125.08333333333333,18.75,131.66666666666666,18.75S158,23.125,164.58333333333334,25S190.91666666666666,35.625,197.5,37.5S223.83333333333334,43.75,230.41666666666669,43.75S256.75,38.4375,263.3333333333333,37.5S289.6666666666667,35.3125,296.25,34.375S322.58333333333337,27.8125,329.1666666666667,28.125S355.5,37.8125,362.0833333333333,37.5Q366.47222222222223,37.291666666666664,395,25L395,50Q366.47222222222223,50,362.0833333333333,50C355.5,50,335.75,50,329.1666666666667,50S302.8333333333333,50,296.25,50S269.91666666666663,50,263.3333333333333,50S237.00000000000003,50,230.41666666666669,50S204.08333333333334,50,197.5,50S171.16666666666669,50,164.58333333333334,50S138.25,50,131.66666666666666,50S105.33333333333333,50,98.75,50S72.41666666666666,50,65.83333333333333,50S39.49999999999999,50,32.916666666666664,50Q28.52777777777778,50,0,50Z" class="area" fill="rgba(255,255,255,0.5)"></path>
-                                </g>
-                            </svg>
+                    <?php else: ?>
+                        <div class="col-sm-6 col-xl-3 mg-t-20 mg-xl-t-0">
+                            <div class="bg-primary rounded overflow-hidden">
+                            <div class="pd-x-20 pd-t-20 d-flex align-items-center">
+                                <i class="ion ion-ios-flash tx-60 lh-0 tx-white op-7"></i>
+                                <div class="mg-l-20">
+                                    <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Mentors</p>
+                                    <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?=$m_dashboard->total_mentors();?></p>
+                                </div>
+                            </div>
+                            <div id="ch4" class="ht-50 tr-y-1 rickshaw_graph">
+                                <svg width="395" height="50">
+                                    <g>
+                                        <path d="M0,25Q28.52777777777778,21.458333333333332,32.916666666666664,21.875C39.49999999999999,22.5,59.24999999999999,30.9375,65.83333333333333,31.25S92.16666666666667,26.25,98.75,25S125.08333333333333,18.75,131.66666666666666,18.75S158,23.125,164.58333333333334,25S190.91666666666666,35.625,197.5,37.5S223.83333333333334,43.75,230.41666666666669,43.75S256.75,38.4375,263.3333333333333,37.5S289.6666666666667,35.3125,296.25,34.375S322.58333333333337,27.8125,329.1666666666667,28.125S355.5,37.8125,362.0833333333333,37.5Q366.47222222222223,37.291666666666664,395,25L395,50Q366.47222222222223,50,362.0833333333333,50C355.5,50,335.75,50,329.1666666666667,50S302.8333333333333,50,296.25,50S269.91666666666663,50,263.3333333333333,50S237.00000000000003,50,230.41666666666669,50S204.08333333333334,50,197.5,50S171.16666666666669,50,164.58333333333334,50S138.25,50,131.66666666666666,50S105.33333333333333,50,98.75,50S72.41666666666666,50,65.83333333333333,50S39.49999999999999,50,32.916666666666664,50Q28.52777777777778,50,0,50Z" class="area" fill="rgba(255,255,255,0.5)"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            </div>
                         </div>
-                        </div>
-                    </div>
+                    <?php endif;?>
                     <!-- col-3 -->
                 </div>
             </div>
@@ -105,9 +126,10 @@ $arr_payment = $m_payment->get_results(array(), 1, 10);
             <br />
 
 
+        <?php if ($_SESSION['is_admin']): ?>
             <div class="card bd-0 shadow-base pd-15">
                 <div class="bd pd-15 mg-b-15 rounded">
-                    Latest Payment Created
+                    Latest Payment
                 </div>
 
                 <?php if (!empty($arr_payment)): ?>
@@ -131,7 +153,11 @@ $arr_payment = $m_payment->get_results(array(), 1, 10);
                                         <?php print timestamp_to_date($value['created']);?>
                                     </td>
                                     <td class="align-middle">
-                                        <a target="_blank" href="https://www.paypal.com/activity/payment/<?php print $value['transaction_id'];?>"><?php print $value['transaction_id'];?></a>
+                                        <?php if ($value['payment_method'] == PAYPAL_PAYMENT_METHOD): ?>
+                                            <a target="_blank" href="https://www.paypal.com/activity/payment/<?php print $value['transaction_id'];?>"><?php print $value['transaction_id'];?></a>
+                                        <?php elseif ($value['payment_method'] == OVO_PAYMENT_METHOD): ?>
+                                            <?php print $value['transaction_id'];?>
+                                        <?php endif;?>
                                     </td>
                                     <td class="align-middle text-center">
                                         <?php if ($value['payment_method'] == PAYPAL_PAYMENT_METHOD): ?>
@@ -165,6 +191,14 @@ $arr_payment = $m_payment->get_results(array(), 1, 10);
                 <?php endif;?>
 
             </div>
+        <?php else: ?>
+            <div class="card bd-0 shadow-base pd-15">
+                <div class="bd pd-15 mg-b-15 rounded">
+                    <p><b>Welcome back to Sinau.id !</b></p>
+                    <p>We see an opportunity to help professionals improve their abilities and competencies while in the workforce without being bound by time and place. Therefore, Sinau.id was born as a tool that provides facilities to improve the skills needed in the world of work. We believe that with Sinau.id everyone can learn!.</p>
+                </div>
+            </div>
+        <?php endif;?>
 
         <!-- End of main content -->
 
