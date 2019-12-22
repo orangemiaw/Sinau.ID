@@ -30,7 +30,7 @@ switch($action) {
                 return;
             }
       
-            $notice->addSuccess("Admin group created successfully !");
+            $notice->addSuccess("Participant group created successfully !");
             ajax_output('', 200, array('location' => '?page=question_group'));
             return;
         }
@@ -74,7 +74,7 @@ switch($action) {
                 "question_group_id" => $id
             ));
       
-            $notice->addSuccess("Admin group deleted successfully !");
+            $notice->addSuccess("Participant group deleted successfully !");
             header("location:".HTTP."?page=question_group");
             return;
         }
