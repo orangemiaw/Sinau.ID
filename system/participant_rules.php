@@ -49,15 +49,19 @@ $config['module'] = array(
 	)
 );
 
-$config['question'] = array(
-	'name'    => 'Question',
+$config['assessment'] = array(
+	'name'    => 'Online Exam',
 	'methods' => array(
 		array(
-			'name' => 'LIST',
+			'name' => 'LIST ASSESSMENTS',
 			'key'  => 'index'
 		),
 		array(
-			'name' => 'RECORD',
+			'name' => 'ASSESSMENT ACTIVITY',
+			'key'  => 'activity'
+		),
+		array(
+			'name' => 'ASSESSMENT RECORD',
 			'key'  => 'record'
 		),
 		array(
