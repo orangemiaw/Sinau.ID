@@ -2,8 +2,11 @@
 $title = "Dashboard";
 include ROOT."app/theme/header.php";
 require_once PATH_MODEL . 'model_dashboard.php';
+require_once PATH_MODEL . 'model_payment.php';
 
 $m_dashboard = new model_dashboard($db);
+$m_payment   = new model_payment($db);
+$arr_payment = $m_payment->get_results(array(), 1, 10);
 ?>
     <div class="br-mainpanel">
 		<div class="br-pagetitle">
@@ -101,14 +104,66 @@ $m_dashboard = new model_dashboard($db);
 
             <br />
 
+
             <div class="card bd-0 shadow-base pd-15">
                 <div class="bd pd-15 mg-b-15 rounded">
-                    <b>Selamat datang di Sinau.id</b>
+                    Latest Payment Created
                 </div>
 
-                <div class="bd pd-15 mg-b-15 rounded">
-                    <p>Masih tahap development jadi dimohon sabar.</p>
+                <?php if (!empty($arr_payment)): ?>
+
+                    <div class="bd bd-gray-300 rounded table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="min-w align-middle">Date</th>
+                                    <th class="align-middle">Transaction ID</th>
+                                    <th class="align-middle text-center">Payment Method</th>
+                                    <th class="align-middle">Payment Amount</th>
+                                    <th class="align-middle text-center">Payment Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php foreach ($arr_payment as $value): ?>
+                                <tr>
+                                    <td class="min-w">
+                                        <?php print timestamp_to_date($value['created']);?>
+                                    </td>
+                                    <td class="align-middle">
+                                        <a target="_blank" href="https://www.paypal.com/activity/payment/<?php print $value['transaction_id'];?>"><?php print $value['transaction_id'];?></a>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <?php if ($value['payment_method'] == PAYPAL_PAYMENT_METHOD): ?>
+                                            <span class="badge badge-info">PayPal</span>
+                                        <?php elseif ($value['payment_method'] == OVO_PAYMENT_METHOD): ?>
+                                            <span class="badge badge-info">OVO</span>
+                                        <?php endif;?>
+                                    </td>
+                                    <td class="align-middle">
+                                        <?php print convert_to_rupiah($value['payment_amount'] * 14000);?>
+                                    </td>
+                                    <td class="align-middle tx-center">
+                                        <?php if (strtoupper($value['payment_status']) == 'APPROVED'): ?>
+                                            <span class="badge badge-success"><?php print strtoupper($value['payment_status']);?></span>
+                                        <?php else: ?>
+                                            <span class="badge badge-danger"><?php print strtoupper($value['payment_status']);?></span>
+                                        <?php endif;?>
+                                    </td>
+                                </tr>
+                                <?php endforeach;?>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                <?php else: ?>
+                <div class="mg-t-30">
+                    <h3 class="text-center">No record found</h3>
                 </div>
+
+                <?php endif;?>
+
             </div>
 
         <!-- End of main content -->

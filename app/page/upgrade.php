@@ -3,6 +3,12 @@ $title = "Upgrade Membership";
 include ROOT."app/theme/header.php";
 require_once PATH_MODEL . 'model_participant_group.php';
 
+if ($_SESSION['is_admin'] == true || empty($_SESSION['id'])) {
+    $notice->addError("You don't have permission to access the feature !");
+    header("location:".HTTP."?page=dashboard");
+    die();
+}
+
 $m_participant_group    = new model_participant_group($db);
 $arr_participant_group  = $m_participant_group->get_results(array('participant_group_status' => STATUS_ENABLE));
 ?>
