@@ -26,16 +26,23 @@ $arr_available_role = $config;
     <form id="form-update" class="card shadow-base bd-0">
 		<div class="card-body">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<div class="form-group mg-b-0">
 						<label class="form-control-label">Group Name: <span class="tx-danger">*</span></label>
 						<input type="text" name="txtGroupName" class="form-control" required autofocus>
 						<ul class="fields-message"></ul>
 					</div>
-
+				</div>
+				
+				<div class="col-md-4">
+					<div class="form-group mg-b-0">
+						<label class="form-control-label">Price (USD): </label>
+						<input type="text" name="txtPrice" class="form-control" autofocus>
+						<ul class="fields-message"></ul>
+					</div>
 				</div>
 
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<div class="form-group mg-b-0">
 						<label class="form-control-label">Status: <span class="tx-danger">*</span></label>
 						<select class="form-control select-two" name="cbStatus" data-placeholder=" -- Pilih Status --" required>

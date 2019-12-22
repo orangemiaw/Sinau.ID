@@ -32,7 +32,6 @@ $arr_available_role = $config;
 						<input type="text" name="txtGroupName" class="form-control" required autofocus>
 						<ul class="fields-message"></ul>
 					</div>
-
 				</div>
 
 				<div class="col-md-6">

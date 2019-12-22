@@ -81,6 +81,7 @@ $arr_participant_group  = $m_participant_group->get_results($where, $page_number
                             <tr>
                                 <th class="min-w align-middle">Created<br>Updated</th>
                                 <th class="align-middle">Group Name</th>
+                                <th class="align-middle">Price</th>
                                 <th class="text-center align-middle">Status</th>
                                 <th class="text-center align-middle">Action</th>
                             </tr>
@@ -107,6 +108,9 @@ $arr_participant_group  = $m_participant_group->get_results($where, $page_number
                                 </td>
                                 <td class="align-middle">
                                     <strong><?=strtoupper($value['participant_group_name']);?></strong>
+                                </td>
+                                <td class="align-middle">
+                                    <strong><?=convert_to_rupiah($value['participant_group_price'] * RATE_USD_TO_IDR);?></strong>
                                 </td>
                                 <td class="align-middle text-center">
                                     <?php if ($value['participant_group_status'] == STATUS_ENABLE): ?>

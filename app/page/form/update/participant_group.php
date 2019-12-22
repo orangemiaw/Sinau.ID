@@ -38,10 +38,18 @@ $arr_role               = json_decode($arr_participant_group['participant_group_
 
 		<div class="card-body">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-12">
 					<div class="form-group">
 						<label class="form-control-label">Group Name: <span class="tx-danger">*</span></label>
 						<input type="text" name="txtGroupName" value="<?=$arr_participant_group['participant_group_name'];?>" class="form-control" required>
+						<ul class="fields-message"></ul>
+					</div>
+				</div>
+				
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="form-control-label">Price (USD): </label>
+						<input type="text" name="txtPrice" value="<?=$arr_participant_group['participant_group_price'];?>" class="form-control">
 						<ul class="fields-message"></ul>
 					</div>
 				</div>

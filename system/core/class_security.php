@@ -2,7 +2,7 @@
 
 defined('SINAUID') OR exit('No direct script access allowed');
 
-error_reporting(0);
+//error_reporting(0);
 class security {
 	var $log_file = "system/logs/";
 	var $telegram_notice = true;

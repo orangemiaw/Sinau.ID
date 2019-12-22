@@ -33,6 +33,6 @@ class model_dashboard {
             }
         }
 
-        return $earning * 14000;
+        return $earning * RATE_USD_TO_IDR;
     }
 }

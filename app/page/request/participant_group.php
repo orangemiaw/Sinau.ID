@@ -6,6 +6,7 @@ $action             = isset($_GET['act']) ? $_GET['act'] : '';
 $id                 = is_numeric($_GET['id']) ? $_GET['id']/1909 : '';
 $name               = isset($_POST['txtGroupName']) ? $_POST['txtGroupName'] : '';
 $status             = isset($_POST['cbStatus']) ? $_POST['cbStatus'] : STATUS_ENABLE;
+$price              = isset($_POST['txtPrice']) ? $_POST['txtPrice'] : '';
 $role               = isset($_POST['cbxGroupRoles']) ? $_POST['cbxGroupRoles'] : '';
 
 switch($action) {
@@ -21,6 +22,7 @@ switch($action) {
             $fields = array(
                 "participant_group_name"      => $name,
                 "participant_group_role"      => json_encode($role),
+                "participant_group_price"     => $price,
                 "participant_group_status"    => $status
             );
 
@@ -52,6 +54,7 @@ switch($action) {
             $fields = array(
                 "participant_group_name"      => $name,
                 "participant_group_role"      => json_encode($role),
+                "participant_group_price"     => $price,
                 "participant_group_status"    => $status
             );
 

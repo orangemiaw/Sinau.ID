@@ -16,7 +16,7 @@ class model_participant_group {
     }
 
     public function get_results($where = array(), $page = 1, $show = 25, $order_val = 'ASC', $order_key = 'participant_group_name') {
-        $query  = "SELECT participant_group_id, created, updated, created_by, updated_by, participant_group_name, participant_group_role, participant_group_status";
+        $query  = "SELECT participant_group_id, created, updated, created_by, updated_by, participant_group_name, participant_group_role, participant_group_price, participant_group_status";
         $query .= " FROM " . $this->table_name . " ";
 
 	    if (count($where) > 0) {
@@ -45,7 +45,7 @@ class model_participant_group {
     }
 
     public function get_row($where = array()) {
-        $query  = "SELECT participant_group_id, created, updated, created_by, updated_by, participant_group_name, participant_group_role, participant_group_status";
+        $query  = "SELECT participant_group_id, created, updated, created_by, updated_by, participant_group_name, participant_group_role, participant_group_price, participant_group_status";
         $query .= " FROM " . $this->table_name . " ";
 
 	    if (count($where) > 0) {

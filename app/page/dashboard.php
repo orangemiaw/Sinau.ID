@@ -141,7 +141,7 @@ $arr_payment = $m_payment->get_results(array(), 1, 10);
                                         <?php endif;?>
                                     </td>
                                     <td class="align-middle">
-                                        <?php print convert_to_rupiah($value['payment_amount'] * 14000);?>
+                                        <?php print convert_to_rupiah($value['payment_amount'] * RATE_USD_TO_IDR);?>
                                     </td>
                                     <td class="align-middle tx-center">
                                         <?php if (strtoupper($value['payment_status']) == 'APPROVED'): ?>

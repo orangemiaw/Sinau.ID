@@ -24,8 +24,11 @@ $upgradeTo = $_POST['cbParticipantGroup'];
 $paymentMethod = $_POST['rdPaymentMethod'];
 
 require PATH_MODEL . 'model_config.php';
+require PATH_MODEL . 'model_participant_group.php';
 $modelConfig = new model_config($db);
+$modelParticipantGroup = new model_participant_group($db);
 $loadPaypalConfig = $modelConfig->get_row();
+$loadParticipantGroup = $modelParticipantGroup->get_row(array('participant_group_id' => $upgradeTo));
 
 $paypalConfig = [
     'enable_sandbox'    => ($loadPaypalConfig['paypal_live_payment'] == STATUS_ENABLE) ? true : false,
@@ -46,7 +49,7 @@ if($paymentMethod == 'paypal') {
 
     // Data for the payment.
     $currency = 'USD';
-    $amountPayable = 10.00;
+    $amountPayable = $loadParticipantGroup['participant_group_price'];
     $invoiceNumber = strtoupper(uniqid()) . '-' . $upgradeTo;
 
     $amount = new Amount();
