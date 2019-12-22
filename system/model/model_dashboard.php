@@ -26,13 +26,13 @@ class model_dashboard {
 
     public function total_earning() {
         $earning = 0;
-        $this->db->go("SELECT * FROM payments WHERE payment_status = " . STATUS_ENABLE);
+        $this->db->go("SELECT * FROM payments WHERE payment_status = 'approved'");
         if($this->db->numRows()>0){
             while($row = $this->db->fetchArray()) {
                 $earning = $earning + $row['payment_amount'];
             }
         }
 
-        return $earning;
+        return $earning * 14000;
     }
 }
