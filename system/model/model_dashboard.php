@@ -24,6 +24,11 @@ class model_dashboard {
         return $this->db->numRows();
     }
 
+    public function total_mentors() {
+        $this->db->go("SELECT * FROM admins WHERE admin_status = " . STATUS_ENABLE);
+        return $this->db->numRows();
+    }
+
     public function total_earning() {
         $earning = 0;
         $this->db->go("SELECT * FROM payments WHERE payment_status = 'approved'");
