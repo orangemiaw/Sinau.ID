@@ -180,4 +180,8 @@ function show_api_data($status_code = 200, $data = array (), $message = array ()
 	}
 }
 
+function convert_to_rupiah($angka) {
+	return 'Rp. '.strrev(implode('.',str_split(strrev(strval($angka)),3)));
+}
+
 ?>

@@ -1,11 +1,9 @@
 <?php
 $title = "Dashboard";
 include ROOT."app/theme/header.php";
-require_once PATH_MODEL . 'model_admin.php';
-require_once PATH_MODEL . 'model_participant.php';
+require_once PATH_MODEL . 'model_dashboard.php';
 
-$m_admin = new model_admin($db);
-$m_participant = new model_participant($db);
+$m_dashboard = new model_dashboard($db);
 ?>
     <div class="br-mainpanel">
 		<div class="br-pagetitle">
@@ -27,7 +25,7 @@ $m_participant = new model_participant($db);
                             <i class="ion ion-md-journal tx-60 lh-0 tx-white op-7"></i>
                             <div class="mg-l-20">
                                 <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Module</p>
-                                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?=$m_admin->total();?></p>
+                                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?=$m_dashboard->total_modules();?></p>
                             </div>
                         </div>
                         <div id="ch1" class="ht-50 tr-y-1 rickshaw_graph">
@@ -45,8 +43,8 @@ $m_participant = new model_participant($db);
                         <div class="pd-x-20 pd-t-20 d-flex align-items-center">
                             <i class="ion ion-md-paper tx-60 lh-0 tx-white op-7"></i>
                             <div class="mg-l-20">
-                                <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Question</p>
-                                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?=$m_admin->total();?></p>
+                                <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Assessments</p>
+                                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?=$m_dashboard->total_assessments();?></p>
                             </div>
                         </div>
                         <div id="ch3" class="ht-50 tr-y-1 rickshaw_graph">
@@ -65,7 +63,7 @@ $m_participant = new model_participant($db);
                             <i class="ion ion-md-contacts tx-60 lh-0 tx-white op-7"></i>
                             <div class="mg-l-20">
                                 <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Participants</p>
-                                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?=$m_admin->total();?></p>
+                                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?=$m_dashboard->total_participants();?></p>
                             </div>
                         </div>
                         <div id="ch2" class="ht-50 tr-y-1 rickshaw_graph">
@@ -83,8 +81,8 @@ $m_participant = new model_participant($db);
                         <div class="pd-x-20 pd-t-20 d-flex align-items-center">
                             <i class="ion ion-ios-cash tx-60 lh-0 tx-white op-7"></i>
                             <div class="mg-l-20">
-                                <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Money</p>
-                                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?=$m_admin->total();?></p>
+                                <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Earning</p>
+                                <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?=convert_to_rupiah($m_dashboard->total_earning());?></p>
                             </div>
                         </div>
                         <div id="ch4" class="ht-50 tr-y-1 rickshaw_graph">
