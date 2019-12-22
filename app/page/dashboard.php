@@ -24,7 +24,7 @@ $m_dashboard = new model_dashboard($db);
                         <div class="pd-x-20 pd-t-20 d-flex align-items-center">
                             <i class="ion ion-md-journal tx-60 lh-0 tx-white op-7"></i>
                             <div class="mg-l-20">
-                                <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Module</p>
+                                <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Modules</p>
                                 <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?=$m_dashboard->total_modules();?></p>
                             </div>
                         </div>
@@ -81,7 +81,7 @@ $m_dashboard = new model_dashboard($db);
                         <div class="pd-x-20 pd-t-20 d-flex align-items-center">
                             <i class="ion ion-ios-cash tx-60 lh-0 tx-white op-7"></i>
                             <div class="mg-l-20">
-                                <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Earning</p>
+                                <p class="tx-10 tx-spacing-1 tx-mont tx-semibold tx-uppercase tx-white-8 mg-b-10">Total Earnings</p>
                                 <p class="tx-24 tx-white tx-lato tx-bold mg-b-0 lh-1"><?=convert_to_rupiah($m_dashboard->total_earning());?></p>
                             </div>
                         </div>

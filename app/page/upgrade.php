@@ -1,13 +1,15 @@
 <?php
 $title = "Upgrade Membership";
 include ROOT."app/theme/header.php";
+require_once PATH_MODEL . 'model_participant_group.php';
 
+$m_participant_group    = new model_participant_group($db);
+$arr_participant_group  = $m_participant_group->get_results(array('participant_group_status' => STATUS_ENABLE));
 ?>
     <div class="br-mainpanel">
 		<div class="br-pagetitle">
 			<h4><?=isset($title) ? $title : 'Untitled';?></h4>
 		</div>
-
         <div class="br-pagebody">
 
         <!-- Main content -->
@@ -15,23 +17,50 @@ include ROOT."app/theme/header.php";
         <?=$GLOBALS['notice']->showSuccess();?>
         <?=$GLOBALS['notice']->showError();?>
 
-            <div class="row row-sm mg-t-20 tx-center">
-                <div class="col-lg-9">
-                    <div class="card shadow-base bd-0 ht-100p">
-                    </div>
-                </div>
-                <div class="col-lg-3 mg-t-20 mg-lg-t-0">
-                    <div class="card bd-0 bg-transparent ht-100p">
-                        <img src="<?=HTTP.'app/theme/assets/img/img40.jpg';?>" class="img-fit-cover rounded" alt="">
-                        <div class="overlay-body bg-black-5 rounded"></div>
-                            <div class="pos-absolute b-0 x-0 tx-center pd-30">
-                                <h3 class="tx-white tx-light tx-shadow">Premium Membership</h3>
-                                <p class="tx-13 tx-white-8 mg-b-25">Get access to all private contents.</p>
-                                <a href="" class="btn btn-warning btn-oblong tx-11 pd-y-12 tx-uppercase d-block tx-semibold tx-mont">Shop Now - $50 USD</a>
-                            </div><!-- overlay-body -->
+        <div class="row">
+            <div class="col-md-6">
+                <form id="form-upgrade" class="card shadow-base bd-0" action="<?=HTTP.'?merchant=payment_request';?>" method="post">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group mg-b-0">
+                                    <label class="form-control-label">Membership Type: <span class="tx-danger">*</span></label>
+                                    <select id="select-brand" name="cbParticipantGroup" class="form-control select-two" data-placeholder="-- Select --" >
+                                        <option></option>
+                                        <?php foreach ($arr_participant_group as $value): ?>
+                                            <?php if(strtolower($_SESSION['group']) != strtolower($value['participant_group_name'])): ?>
+                                                <option value="<?php print $value['participant_group_id'];?>" >
+                                                    <?php print $value['participant_group_name'];?>
+                                                </option>
+                                            <?php endif;?>
+                                        <?php endforeach;?>
+                                    </select>
+                                    <ul class="fields-message"></ul>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group mg-b-0">
+                                    <label class="form-control-label">Select Payment Method: <span class="tx-danger">*</span></label>
+                                    <label class="rdiobox">
+                                        <input name="rdPaymentMethod" value="paypal" type="radio" checked>
+                                        <span>PayPal</span>
+                                    </label>
+                                    <label class="rdiobox">
+                                        <input name="rdPaymentMethod" value="ovo" type="radio">
+                                        <span>OVO</span>
+                                    </label>
+                                    <ul class="fields-message"></ul>
+                                </div>
+                            </div>
+
                         </div>
-                    </div><!-- col-3 -->
-                </div><!-- row -->
+                    </div>
+                    <div class="card-footer bd-color-gray-lighter text-right">
+                        <button type="submit" class="btn btn-primary tx-size-xs ">Submit</button>
+                    </div>
+                
+                </form>
             </div>
         </div>
 

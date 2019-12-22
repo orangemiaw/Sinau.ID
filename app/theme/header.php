@@ -7,6 +7,7 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] == false) {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -208,21 +209,26 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] == false) {
 					</li>
 				<?php endif;?>
 				
-				<?php if (isset($_SESSION['role']->question)): ?>
+				<?php if (isset($_SESSION['role']->assessment)): ?>
 					<li class="br-menu-item">
 						<a href="#" class="br-menu-link with-sub">
 							<i class="menu-item-icon icon ion-ios-copy tx-24"></i>
-							<span class="menu-item-label">Skill Assessments</span>
+							<span class="menu-item-label">Online Exam</span>
 						</a>
 						<ul class="br-menu-sub nav flex-column">
-							<?php if (isset($_SESSION['role']->question)): ?>
+							<?php if (isset($_SESSION['role']->assessment->index)): ?>
 								<li class="sub-item">
-									<a class="sub-link" href="<?=HTTP.'?page=question';?>">List Assessments</a>
+									<a class="sub-link" href="<?=HTTP.'?page=assessment';?>">List Assessments</a>
 								</li>
 							<?php endif;?>
-							<?php if (isset($_SESSION['role']->question_record)): ?>
+							<?php if (isset($_SESSION['role']->assessment->record)): ?>
 								<li class="sub-item">
-									<a class="sub-link" href="<?=HTTP.'?page=question_record';?>">Assessments Records</a>
+									<a class="sub-link" href="<?=HTTP.'?page=assessment_activity';?>">Assessment Activity</a>
+								</li>
+							<?php endif;?>
+							<?php if (isset($_SESSION['role']->assessment->record)): ?>
+								<li class="sub-item">
+									<a class="sub-link" href="<?=HTTP.'?page=assessment_record';?>">Assessment Status</a>
 								</li>
 							<?php endif;?>
 						</ul>
@@ -275,7 +281,15 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] == false) {
 		</div>
 		<div class="br-header-right">
 			<nav class="nav">
-				<a class="btn btn-outline-primary btn-oblong" href="<?=HTTP.'?page=upgrade';?>"><i class="icon ion ion-md-flash tx-18"></i> <?=$_SESSION['group'];?> </a>
+				<?php if ($_SESSION['is_admin']): ?>
+					<a class="btn btn-outline-primary btn-oblong" href="#"><i class="icon ion ion-md-flash tx-18"></i> <?=$_SESSION['group'];?> </a>
+				<?php else: ?>
+					<?php if($_SESSION['group_id'] == DEFAULT_GROUP_ID): ?>
+						<a class="btn btn-outline-warning btn-oblong" href="<?=HTTP.'?page=upgrade';?>"><i class="icon ion ion-md-flash tx-18"></i> Upgrade </a>
+					<?php else: ?>
+						<a class="btn btn-outline-primary btn-oblong" href="#"><i class="icon ion ion-md-star tx-18"></i> <?=$_SESSION['group'];?> </a>
+					<?php endif;?>
+				<?php endif;?>
 				&nbsp
 				<a class="btn btn-outline-danger btn-oblong" href="javascript:;" onclick="return logoutConfirm('<?=HTTP.'?page=logout';?>');" ><i class="icon ion ion-md-power tx-18"></i> Logout</a>
 			</nav>

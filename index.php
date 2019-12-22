@@ -32,6 +32,12 @@ if(isset($_GET['page']) && !empty($_GET['page'])){
 	} else {
 		require_once $path."error/404.php";
 	}
+} elseif(isset($_GET['merchant']) && !empty($_GET['merchant'])){
+	if(file_exists($path."merchant/".$_GET['merchant'].".php")){
+		require_once $path."merchant/".$_GET['merchant'].".php";
+	} else {
+		require_once $path."error/404.php";
+	}
 } else {
 	require_once $path."home.php";
 }

@@ -4,7 +4,6 @@
 require_once PATH_MODEL . 'model_admin.php';
 require_once PATH_MODEL . 'model_participant.php';
 
-$curl = new curl();
 $m_admin = new model_admin($db);
 $m_participant = new model_participant($db);
 
@@ -15,6 +14,7 @@ if(isset($_POST['login']) && isset($_POST['passwd']) && !empty($_POST['login']) 
 	$captcha 		= $_POST['g-recaptcha-response'];
 
 	if(RECAPTCHA_STATUS) {
+		$curl 			= new curl();
 		$response		= $curl->get("https://www.google.com/recaptcha/api/siteverify?secret=".RECAPTCHA_SECRET_KEY."&response=".$captcha."&remoteip=".ip_address());
 		$json_response 	= json_decode($response, true);
 
@@ -40,6 +40,7 @@ if(isset($_POST['login']) && isset($_POST['passwd']) && !empty($_POST['login']) 
 	$_SESSION['username'] 	= $admin ? $admin['admin_login'] : $admin['participant_login'];
 	$_SESSION['role'] 		= $admin ? json_decode($admin['admin_group_role']) : json_decode($participant['participant_group_role']);
 	$_SESSION['group'] 		= $admin ? $admin['admin_group_name'] : $participant['participant_group_name'];
+	$_SESSION['group_id']	= $admin ? $admin['admin_group_id'] : $participant['participant_group_id'];
 	$_SESSION['id'] 		= $admin ? $admin['admin_id'] : $participant['participant_id'];
 
 	$notice->addSuccess("Welcome back <strong>".$login."</strong> !");

@@ -1,5 +1,6 @@
 {
     "require": {
-        "lintangtimur/ovoid": "v1.2.4.3"
+        "lintangtimur/ovoid": "v1.2.4.3",
+        "paypal/rest-api-sdk-php": "^1.13"
     }
 }

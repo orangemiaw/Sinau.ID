@@ -20,40 +20,40 @@ include ROOT."app/theme/header.php";
     <div class="br-pagebody">
 
     <!-- Main content -->
-<div class="row">
-	<div class="col-md-12">
-    <form id="form-update" class="card shadow-base bd-0">
-		<div class="card-body">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-group mg-b-0">
-						<label class="form-control-label">Group Name: <span class="tx-danger">*</span></label>
-						<input type="text" name="txtGroupName" class="form-control" required autofocus>
-						<ul class="fields-message"></ul>
+	<div class="row">
+		<div class="col-md-12">
+			<form id="form-update" class="card shadow-base bd-0">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group mg-b-0">
+								<label class="form-control-label">Group Name: <span class="tx-danger">*</span></label>
+								<input type="text" name="txtGroupName" class="form-control" required autofocus>
+								<ul class="fields-message"></ul>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class="form-group mg-b-0">
+								<label class="form-control-label">Status: <span class="tx-danger">*</span></label>
+								<select class="form-control select-two" name="cbStatus" data-placeholder=" -- Pilih Status --" required>
+									<option></option>
+									<option value="<?=STATUS_ENABLE;?>">Enable</option>
+									<option value="<?=STATUS_DISABLE;?>">Disable</option>
+								</select>
+								<ul class="fields-message"></ul>
+							</div>
+						</div>
+
 					</div>
 				</div>
-
-				<div class="col-md-6">
-					<div class="form-group mg-b-0">
-						<label class="form-control-label">Status: <span class="tx-danger">*</span></label>
-						<select class="form-control select-two" name="cbStatus" data-placeholder=" -- Pilih Status --" required>
-							<option></option>
-							<option value="<?=STATUS_ENABLE;?>">Enable</option>
-							<option value="<?=STATUS_DISABLE;?>">Disable</option>
-						</select>
-						<ul class="fields-message"></ul>
-					</div>
+				<div class="card-footer bd-color-gray-lighter text-right">
+					<button type="submit" class="btn btn-primary tx-size-xs ">Submit</button>
 				</div>
-
-			</div>
+			
+			</form>
 		</div>
-		<div class="card-footer bd-color-gray-lighter text-right">
-			<button type="submit" class="btn btn-primary tx-size-xs ">Submit</button>
-		</div>
-    
-    </form>
 	</div>
-</div>
 
 
 <script type="text/javascript">

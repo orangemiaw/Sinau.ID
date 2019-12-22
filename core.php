@@ -13,7 +13,7 @@ include "system/core/class_pagination.php";
 include "system/core/class_security.php";
 include "system/constrain.php";
 include "system/helper.php";
-require 'system/vendor/autoload.php';
+require "vendor/autoload.php";
 
 /** Load configuration file */
 $conf = parse_ini_file( dirname( __FILE__ ) . '/.config' );
@@ -35,11 +35,10 @@ $notice 	= new notice();
 $upload 	= new upload();
 $security 	= new security();
 
-/** Load payment */
-use Stelin\OVOID;
-$ovoid = new OVOID();
-
 /** Security configuration */
 $security->secureMe($conf["activate_firewall"]);
+
+/** Load merchant */
+// include "system/merchant/paypal.php";
 
 ?>

@@ -2,7 +2,6 @@
 
 require_once PATH_MODEL . 'model_participant.php';
 
-$curl = new curl();
 $m_participant = new model_participant($db);
 
 if (isset($_POST['login']) && isset($_POST['passwd'])){
@@ -14,6 +13,7 @@ if (isset($_POST['login']) && isset($_POST['passwd'])){
     $captcha 		= $_POST['g-recaptcha-response'];
 
      if(RECAPTCHA_STATUS) {
+		$curl 			= new curl();
           $response		     = $curl->get("https://www.google.com/recaptcha/api/siteverify?secret=".RECAPTCHA_SECRET_KEY."&response=".$captcha."&remoteip=".ip_address());
           $json_response 	= json_decode($response, true);
 
