@@ -11,6 +11,9 @@ define('DEFAULT_GROUP_ID', 1);
 define('PAYPAL_PAYMENT_METHOD', 1);
 define('OVO_PAYMENT_METHOD', 2);
 
+define('ANSWER_CORRECT', 0);
+define('ANSWER_INCORRECT', 1);
+
 define('FACE_API_KEY', 'gC9CHnYWsww_i9-gDQyiBv4yv0Tijr0o');
 define('FACE_API_SECRET', 'JuWcBZOeS8pyCiNJZgFLwK2j7Ftzo7wK');
 

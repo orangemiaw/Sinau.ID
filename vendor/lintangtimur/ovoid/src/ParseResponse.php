@@ -28,7 +28,7 @@ class ParseResponse
         OVOID::BASE_ENDPOINT . 'v1.0/reference/master/ref_bank'                       => 'Stelin\Response\Ref_BankResponse',
         OVOID::BASE_ENDPOINT . 'transfer/inquiry'                                     => 'Stelin\Response\TransferInquiryResponse',
         OVOID::BASE_ENDPOINT . 'transfer/direct'                                      => 'Stelin\Response\TransferDirectResponse',
-        OVOID::BASE_ENDPOINT . 'v1.1/api/auth/customer/isOVO'                          => 'Stelin\Response\isOVOResponse'
+        OVOID::BASE_ENDPOINT . 'v1.1/api/auth/customer/isOVO'                         => 'Stelin\Response\isOVOResponse'
     ];
 
     private $response;
@@ -45,6 +45,7 @@ class ParseResponse
         //-- Cek apakah ada error dari OVO Response
         if (isset($jsonDecodeResult->code)) {
             throw new \Stelin\Exception\OvoidException($jsonDecodeResult->message . ' ' . $url);
+            // $this->response = $jsonDecodeResult->message;
         }
 
         $parts = parse_url($url);

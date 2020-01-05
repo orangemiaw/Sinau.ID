@@ -36,7 +36,7 @@ $arr_participant_group  = $m_participant_group->get_results(array('participant_g
                                         <?php foreach ($arr_participant_group as $value): ?>
                                             <?php if(strtolower($_SESSION['group']) != strtolower($value['participant_group_name'])): ?>
                                                 <option value="<?php print $value['participant_group_id'];?>" >
-                                                    <?php print $value['participant_group_name'];?>
+                                                    <?php print $value['participant_group_name'] . ' - ' . convert_to_rupiah($value['participant_group_price'] * RATE_USD_TO_IDR);?>
                                                 </option>
                                             <?php endif;?>
                                         <?php endforeach;?>

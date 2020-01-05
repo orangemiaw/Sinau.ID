@@ -32,7 +32,7 @@ if ($_SESSION['is_admin'] == true || empty($_SESSION['id']) || empty($_SESSION['
                             <div class="col-md-12">
                                 <div class="form-group mg-b-0">
                                     <label class="form-control-label">Input Your OVO Pin: <span class="tx-danger">*</span></label>
-                                    <input type="text" name="txtOTPPin" class="form-control" placeholder="123456" required autofocus>
+                                    <input type="password" name="txtOTPPin" class="form-control" placeholder="123456" required autofocus>
                                     <ul class="fields-message"></ul>
                                 </div>
                                 <input type="hidden" name="txtOVOToken" value="<?=$_GET['token'];?>" required>

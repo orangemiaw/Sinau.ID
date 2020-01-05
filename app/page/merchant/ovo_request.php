@@ -1,5 +1,6 @@
 <?php
 use Stelin\OVOID;
+use Stelin\Response\CustomerTransferResponse;
 $ovoid = new OVOID();
 
 $action         = isset($_GET['act']) ? $_GET['act'] : '';
@@ -35,7 +36,7 @@ switch($action) {
         try {
             $token = $ovoid->login2FAVerify($refId, $otpCode, $phoneNumber)->getUpdateAccessToken();
             if(!empty($token)) {
-                header("Location:".HTTP."?merchant=ovo_step3&token=" . $token);
+                header("Location:".HTTP."?merchant=ovo_step3&token=" . $token . "&refId=" . $refId);
                 return;
             } else {
                 $notice->addError("Failed to connect OVO server !");
@@ -61,12 +62,28 @@ switch($action) {
             $upgradePrice = $loadParticipantGroup['participant_group_price'] * RATE_USD_TO_IDR;
 
             $ovoid = new OVOID($authorization);
+            $response = new CustomerTransferResponse(array('refId' => $refId));
             $payment = $ovoid->transferOvo($loadOVOConfig['ovo_number'], $upgradePrice, "Sinau.id Upgrade Account");
-            if(!$payment) {
-                $notice->addError("Failed to make payment using OVO because low balance or token expired !");
-                header("Location:".HTTP."?page=upgrade");
-                return;
-            }
+
+            var_dump($response->getMessage());
+            die();
+
+            // try {
+            //     $payment = $ovoid->transferOvo($loadOVOConfig['ovo_number'], $upgradePrice, "Sinau.id Upgrade Account");
+                
+            //     var_dump(json_encode($payment, false));
+            //     die();
+            // } catch (OvoidException $e) {
+            //     $notice->addError("Error ! " . $e);
+            //     header("location:".HTTP."?page=upgrade");
+            //     return;
+            // }
+
+            // if(!$payment) {
+            //     $notice->addError("Failed to make payment using OVO because low balance or token expired !");
+            //     header("Location:".HTTP."?page=upgrade");
+            //     return;
+            // }
 
             $data = [
                 'participant_id' => $_SESSION['id'],
