@@ -43,21 +43,24 @@ $arr_question   = $m_question->get_results(array('question_type_id' => $_GET['id
                 <?php if (!empty($arr_question)): ?>
                     <?php 
                         $no = 1;
-                        foreach($arr_question as $value): ?>
+                        foreach($arr_question as $value): 
+                    ?>
                             <div class="col-lg-12">
                                 <b><?=$no;?>. <?=$value['question_text'];?></b><br /><br />
                             </div>
+                            
                         <?php
                             $arr_answer = $m_answer->get_results(array('question_id' => $value['question_id']), $page_number, $data_per_page);
                             foreach($arr_answer as $answer):
-                            ?>
+                        ?>
                             <div class="col-lg-12">
                                 <input type="radio" name="answer"> <?=$answer['answer_text'];?><br/>
                             </div>
                             <?php endforeach;?>
                     <?php 
                         $no++;
-                        endforeach;?>
+                        endforeach;
+                    ?>
 
                 <?php else: ?>
                     <b>No question found.</b>
