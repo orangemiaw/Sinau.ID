@@ -53,6 +53,7 @@ switch($action) {
         $authorization = $ovoid->loginSecurityCode($pinCode, $tokenCode)->getAuthorizationToken();
 
         if(!empty($authorization)) {
+            error_reporting(0);
             require PATH_MODEL . 'model_config.php';
             require PATH_MODEL . 'model_participant_group.php';
             $modelConfig = new model_config($db);
@@ -62,55 +63,42 @@ switch($action) {
             $upgradePrice = $loadParticipantGroup['participant_group_price'] * RATE_USD_TO_IDR;
 
             $ovoid = new OVOID($authorization);
-            $response = new CustomerTransferResponse(array('refId' => $refId));
             $payment = $ovoid->transferOvo($loadOVOConfig['ovo_number'], $upgradePrice, "Sinau.id Upgrade Account");
+            $response = new CustomerTransferResponse($payment);
 
-            var_dump($response->getMessage());
-            die();
-
-            // try {
-            //     $payment = $ovoid->transferOvo($loadOVOConfig['ovo_number'], $upgradePrice, "Sinau.id Upgrade Account");
-                
-            //     var_dump(json_encode($payment, false));
-            //     die();
-            // } catch (OvoidException $e) {
-            //     $notice->addError("Error ! " . $e);
-            //     header("location:".HTTP."?page=upgrade");
-            //     return;
-            // }
-
-            // if(!$payment) {
-            //     $notice->addError("Failed to make payment using OVO because low balance or token expired !");
-            //     header("Location:".HTTP."?page=upgrade");
-            //     return;
-            // }
-
-            $data = [
-                'participant_id' => $_SESSION['id'],
-                'transaction_id' => 'OVOID-' . time(),
-                'payment_method' => OVO_PAYMENT_METHOD,
-                'payment_amount' => $loadParticipantGroup['participant_group_price'],
-                'payment_status' => 'approved',
-                'invoice_id'     => strtoupper(uniqid() . '-' . $_SESSION['tmp_upgrade'])
-            ];
-
-            $update = $db->update("participants", array("participant_group_id" => $explodeInvoice[1]), array("participant_id" => $data['participant_id']));
-            $insert = $db->insert("payments", $data);
-
-            if(!$insert || !$update) {
-                $notice->addError("Query failed !");
-                header("location:".HTTP."?page=upgrade");
+            // Failed response if 10010001
+            if($response->getCode() !== 10010001) {
+                $data = [
+                    'participant_id' => $_SESSION['id'],
+                    'transaction_id' => 'OVOID-' . time(),
+                    'payment_method' => OVO_PAYMENT_METHOD,
+                    'payment_amount' => $loadParticipantGroup['participant_group_price'],
+                    'payment_status' => 'approved',
+                    'invoice_id'     => strtoupper(uniqid() . '-' . $_SESSION['tmp_upgrade'])
+                ];
+    
+                $update = $db->update("participants", array("participant_group_id" => $explodeInvoice[1]), array("participant_id" => $data['participant_id']));
+                $insert = $db->insert("payments", $data);
+    
+                if(!$insert || !$update) {
+                    $notice->addError("Query failed !");
+                    header("location:".HTTP."?page=upgrade");
+                    return;
+                }
+    
+                $arr_participant_group  = $m_participant_group->get_row(array("participant_group_id" => $_SESSION['tmp_upgrade']));
+                $_SESSION['group']      = $arr_participant_group['participant_group_name'];
+                $_SESSION['group_id']   = $arr_participant_group['participant_group_id'];
+    
+                unset($_SESSION['tmp_upgrade']);
+            } else {
+                $notice->addError("Error ! " . $response->getMessage());
+                header("Location:".HTTP."?page=upgrade");
                 return;
             }
-
-            $arr_participant_group  = $m_participant_group->get_row(array("participant_group_id" => $_SESSION['tmp_upgrade']));
-            $_SESSION['group']      = $arr_participant_group['participant_group_name'];
-            $_SESSION['group_id']   = $arr_participant_group['participant_group_id'];
-
-            unset($_SESSION['tmp_upgrade']);
         } else {
             $notice->addError("Failed to connect OVO server !");
-            header("Location:".HTTP."?merchant=ovo_step3&token=" . $tokenCode);
+            header("Location:".HTTP."?merchant=ovo_step1");
             return;
         }
         break;

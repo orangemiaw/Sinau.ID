@@ -44,8 +44,8 @@ class ParseResponse
         $jsonDecodeResult = json_decode($chResult);
         //-- Cek apakah ada error dari OVO Response
         if (isset($jsonDecodeResult->code)) {
-            throw new \Stelin\Exception\OvoidException($jsonDecodeResult->message . ' ' . $url);
-            // $this->response = $jsonDecodeResult->message;
+            // throw new \Stelin\Exception\OvoidException($jsonDecodeResult->message . ' ' . $url);
+            $this->response = $jsonDecodeResult->message;
         }
 
         $parts = parse_url($url);

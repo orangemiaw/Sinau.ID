@@ -10,9 +10,9 @@ class CustomerTransferResponse
 
     public function __construct($data)
     {
-        $this->code = $data->code;
-        $this->message = $data->message;
-        $this->isOvo = $data->isOvo;
+        $this->code = $data->code ? $data->code : false;
+        $this->message = $data->message ? $data->message : false;
+        $this->isOvo = $data->isOvo ? $data->isOvo : false;
     }
 
     /**
