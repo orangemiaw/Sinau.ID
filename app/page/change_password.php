@@ -2,24 +2,24 @@
 defined('SINAUID') OR exit('No direct script access allowed');
 
 // Chcek role and block if not have access role
-if (!isset($_SESSION['role']->{$_GET['update']}->update)) {
+if (!isset($_SESSION['role']->account_profile->change_password)) {
     $notice->addError("You don't have permission to access the feature !");
-    header("location:".HTTP."?page=" . $_GET['update']);
+    header("location:".HTTP."?page=dashboard");
     return;
 }
 
-if(!isset($_GET['id']) || empty($_GET['id'])) {
-    $notice->addError("Parameter id can't be empty !");
-    header("location:".HTTP."?page=" . $_GET['update']);
-    return;
-}
-
-$title = "Update Admin Group";
+$title = "Change Password";
 include ROOT."app/theme/header.php";
-include PATH_MODEL . 'model_question_group.php';
 
-$m_question_group   = new model_question_group($db);
-$arr_question_group = $m_question_group->get_row(array("question_group_id" => $_GET['id']/1909));
+if($_SESSION['is_admin']) {
+    include PATH_MODEL . 'model_admin.php';
+    $m_admin = new model_admin($db);
+    $arr_data = $m_admin->get_row(array("admin_id" => $_SESSION['id']));
+} else {
+    include PATH_MODEL . 'model_participant.php';
+    $m_participant = new model_participant($db);
+    $arr_data = $m_participant->get_row(array("participant_id" => $_SESSION['id']));
+}
 
 ?>
 <div class="br-mainpanel">
@@ -32,30 +32,24 @@ $arr_question_group = $m_question_group->get_row(array("question_group_id" => $_
 	<div class="col-md-7 col-sm-12">
 
     <form id="form-update" class="card shadow-base bd-0">
-
-		<div class="card-body">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="form-group">
-						<label class="form-control-label">Group Name: <span class="tx-danger">*</span></label>
-						<input type="text" name="txtGroupName" value="<?=$arr_question_group['question_group_name'];?>" class="form-control" required>
-						<ul class="fields-message"></ul>
+        <div class="card-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class="form-control-label">New Password <span class="tx-danger">*</span></label>
+							<input class="form-control" type="password" name="txtNewPassword" value="" autofocus >
+							<ul class="fields-message"></ul>
+						</div>
 					</div>
-				</div>
-
-				<div class="col-md-6">
-					<div class="form-group">
-						<label class="form-control-label">Status: <span class="tx-danger">*</span></label>
-						<select class="form-control select-two" name="cbStatus" data-placeholder=" -- Pilih Status -- " required="required">
-							<option></option>
-							<option value="<?=STATUS_ENABLE;?>" <?php echo set_select(STATUS_ENABLE, $arr_question_group['question_group_status']); ?>>Enable</option>
-							<option value="<?=STATUS_DISABLE;?>" <?php echo set_select(STATUS_DISABLE, $arr_question_group['question_group_status']); ?>>Disable</option>
-						</select>
-						<ul class="fields-message"></ul>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label class="form-control-label">Confirm New Password <span class="tx-danger">*</span></label>
+							<input class="form-control" type="password" name="txtNewPasswordVerify" value="">
+							<ul class="fields-message"></ul>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 		<div class="card-footer bd-color-gray-lighter text-right">
 			<button type="submit" class="btn btn-primary tx-size-xs ">Submit</button>
 		</div>
@@ -67,30 +61,30 @@ $arr_question_group = $m_question_group->get_row(array("question_group_id" => $_
 	<div class="col-md-5 col-sm-12 mg-t-20 mg-md-t-0">
 
 		<div class="card shadow-base bd-0 mg-b-20">
-			<?php if (!empty($arr_question_group['updated']) && !empty($arr_question_group['updated_by']) && !empty($arr_question_group['created']) && !empty($arr_question_group['created_by'])): ?>
+			<?php if (!empty($arr_data['updated']) && !empty($arr_data['updated_by']) && !empty($arr_data['created']) && !empty($arr_data['created_by'])): ?>
 			<div class="card-body bg-transparent pd-0 bd-gray-200 mg-t-auto">
 				<div class="row no-gutters tx-center">
-					<?php if (!empty($arr_question_group['updated']) && !empty($arr_question_group['updated_by'])): ?>
+					<?php if (!empty($arr_data['updated']) && !empty($arr_data['updated_by'])): ?>
 					<div class="col pd-y-15">
 						<p class="mg-b-5 tx-uppercase tx-12 tx-mont tx-semibold">Terakhir Diubah</p>
 						<h4 class="tx-16 tx-bold mg-b-0 tx-inverse">
-							<?=strtoupper($arr_question_group['updated_by']);?>
+							<?=strtoupper($arr_data['updated_by']);?>
 						</h4>
 						<span class="tx-12 tx-primary tx-roboto">
-							<?=timestamp_to_date($arr_question_group['updated']);?>
+							<?=timestamp_to_date($arr_data['updated']);?>
 						</span>
 					</div>
 					<?php endif;?>
 
 
 					<div class="col pd-y-15 bd-l bd-gray-200">
-						<?php if (!empty($arr_question_group['created']) && !empty($arr_question_group['created_by'])): ?>
+						<?php if (!empty($arr_data['created']) && !empty($arr_data['created_by'])): ?>
 						<p class="mg-b-5 tx-uppercase tx-12 tx-mont tx-semibold">Dibuat</p>
 						<h4 class="tx-16 tx-inverse tx-bold mg-b-0">
-							<?=strtoupper($arr_question_group['created_by']);?>
+							<?=strtoupper($arr_data['created_by']);?>
 						</h4>
 						<span class="tx-12 tx-primary tx-roboto">
-							<?=timestamp_to_date($arr_question_group['created']);?>
+							<?=timestamp_to_date($arr_data['created']);?>
 						</span>
 					</div>
 					<?php endif;?>
@@ -109,7 +103,7 @@ $(document).ready(function() {
 
 	$('#form-update').on('submit', function(event){
 		event.preventDefault();
-		var request 	= '<?=$_GET['update'] . '&act=update&id=' . $_GET['id'];?>',
+		var request 	= '<?=$_GET['page'] . '&act=update&id=' . $_SESSION['id']*1909;?>',
 			form 		= $(this);
 
 		loading(form, 'show');

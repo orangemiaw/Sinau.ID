@@ -21,10 +21,14 @@
 	<span class="col text-right ip-address"></span>
 </div>
 
+<?php
+$change_log_path = !empty($_GET['update']) ? $_GET['update'] : $_GET['page'];
+?>
+
 <script type="text/javascript">
 function get_action_log() {
 	var query = {
-        url     : '<?=HTTP . "?do=" . $_GET['update'] . "&act=update&id=" . $_GET['id'];?>'
+        url     : '<?=HTTP . "?do=" . $change_log_path . "&act=update&id=" . $_GET['id'];?>'
 	};
 
 	ajax_get('change_log', query, function(result) {
