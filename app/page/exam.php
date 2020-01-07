@@ -2,29 +2,34 @@
 defined('SINAUID') OR exit('No direct script access allowed');
 
 // Chcek role and block if not have access role
-// if (!isset($_SESSION['role']->{$_GET['detail']}->detail)) {
-//     $notice->addError("You don't have permission to access the feature !");
-//     header("location:".HTTP."?page=" . $_GET['detail']);
-//     return;
-// }
+if (!isset($_SESSION['role']->assessment->exam)) {
+    $notice->addError("You don't have permission to access the feature !");
+    header("location:".HTTP."?page=assessment");
+    return;
+}
 
 if(!isset($_GET['id']) || empty($_GET['id'])) {
     $notice->addError("Parameter id can't be empty !");
-    header("location:".HTTP."?page=" . $_GET['detail']);
+    header("location:".HTTP."?page=assessment");
     return; 
 }
 
-$title = "Online Exam 1/10";
-include ROOT."app/theme/header.php";
 include PATH_MODEL . 'model_question.php';
+include PATH_MODEL . 'model_question_type.php';
 include PATH_MODEL . 'model_answer.php';
 
 $m_question     = new model_question($db);
+$m_type         = new model_question_type($db);
 $m_answer       = new model_answer($db);
 $page_number    = is_numeric($_GET['hal']) ? $_GET['hal'] : 1;
-$data_per_page  = 20;
-$total_rows     = $m_question->total_rows();
-$arr_question   = $m_question->get_results(array('question_type_id' => $_GET['id']), $page_number, $data_per_page);
+$data_per_page  = 1;
+$arr_question   = $m_question->get_results(array('question_type_id' => $_GET['id']/1909), $page_number, $data_per_page);
+$arr_type       = $m_type->get_row(array('question_type_id' => $arr_question['question_type_id']));
+$total_rows     = $arr_type['total'];
+
+$title = "Online Exam " . $page_number . "/" . $arr_type['total'];
+
+include ROOT."app/theme/header.php";
 
 ?>
 <div class="br-mainpanel">
@@ -33,43 +38,43 @@ $arr_question   = $m_question->get_results(array('question_type_id' => $_GET['id
     </div>
     <div class="br-pagebody">
 
+    <?=$GLOBALS['notice']->showSuccess();?>
+    <?=$GLOBALS['notice']->showError();?>
+
 <div class="row">
 	<div class="col-md-7 col-sm-12">
-        <form id="form-detail" class="card shadow-base bd-0">
+        <form id="form-answer" class="card shadow-base bd-0">
 
             <div class="card-body">
                 <div class="row">
                     <?php if (!empty($arr_question)): ?>
-                        <?php 
-                            $no = 1;
-                            foreach($arr_question as $value): 
-                        ?>
-                                <div class="col-lg-12">
-                                    <b><?=$no;?>. <?=$value['question_text'];?></b><br /><br />
-                                </div>
+                        <?php foreach($arr_question as $value): ?>
+                            <div class="col-lg-12">
+                                <?=!empty($value['question_image']) ? print '<img src="' . HTTP . '/' . $value['question_image'] . '" width="300" />' : '';?>
+                                <b><?=$page_number;?>. <?=$value['question_text'];?></b><br /><br />
+								<input type="hidden" name="txtQuestionId" id="txtQuestionId" value="<?=$value['question_id']*1909;?>">
+                            </div>
                                 
                             <?php
-                                $arr_answer = $m_answer->get_results(array('question_id' => $value['question_id']), $page_number, $data_per_page);
+                                $arr_answer = $m_answer->get_results(array('question_id' => $value['question_id']), 1, 5);
                                 foreach($arr_answer as $answer):
                             ?>
                                 <div class="col-lg-12">
-                                    <input type="radio" name="answer"> <?=$answer['answer_text'];?><br/>
+                                    <input type="radio" id="rbAnswer" name="rbAnswer" value="<?=$answer['answer_id'];?>"> <?=$answer['answer_text'];?><br/>
                                 </div>
                                 <?php endforeach;?>
-                        <?php 
-                            $no++;
-                            endforeach;
-                        ?>
-
+                        <?php endforeach; ?>
                     <?php else: ?>
-                        <b>No question found.</b>
+						<div class="col-lg-12">
+	                        <b>No question found.</b>
+						</div>
                     <?php endif;?>
 
                 </div>
             </div>
 
             <div class="card-footer bd-color-gray-lighter text-right">
-                <button type="submit" class="btn btn-primary tx-size-xs ">Submit Answer & Next</button>
+                <button type="submit" class="btn btn-primary tx-size-xs">Submit Answer & Next</button>
             </div>
 
             </form>
@@ -85,9 +90,7 @@ $arr_question   = $m_question->get_results(array('question_type_id' => $_GET['id
 				<div id="inputImage" class="col-md-12 tx-center pd-15">
                     <center>
                         <div id="my_camera"></div>
-                        <div id="results"></div>
                     </center>
-                    <input type="hidden" type="file" accept="image/*" name="image_base64" class="image-tag">
                     <br />
                     <p>Kejujuran itu seperti cermin. Sekali dia retak, pecah, maka jangan harap dia akan pulih seperti sedia kala. Jangan coba-coba bermain dengan cermin.</p>
 				</div>
@@ -113,15 +116,80 @@ $arr_question   = $m_question->get_results(array('question_type_id' => $_GET['id
 		jpeg_quality: 100
 	});
 	Webcam.attach( '#my_camera' );
- 
-    function take_snapshot() {
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#form-answer').on('submit', function(event){
+		event.preventDefault();
+
+		var request 	= '?do=<?=$_GET['page'] . '&act=answer&id=' . $_GET['id'] . '&txtQuestionNo=' . $page_number;?>',
+			form    	= $(this),
+			answer 		= $("input:radio[name=rbAnswer]:checked").val(),
+			question_id = $("#txtQuestionId").val(),
+			image_file 	= '';
+
         Webcam.snap( function(data_uri) {
-            $(".image-tag").val(data_uri);
-            document.getElementById('my_camera').style.display = "none";
-            document.getElementById('takeSnapshot').style.display = "none";
-            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
-        } );
-    }
+            image_file = data_uri;
+        });
+
+		loading(form, 'show');		
+        $.ajax({
+            type: 'POST',
+            url: request,
+            data: 'rbAnswer=' + answer + '&txtImageBase64=' + image_file + '&txtQuestionId=' + question_id,
+            contentType: 'application/x-www-form-urlencoded',
+            cache: false,
+            processData: false,
+            success: function (result) {
+                init_meta(result.meta);
+                loading(form, 'hide');
+            }
+		});
+		
+	});
+
+	$('.role-group-list').each(function(i, obj) {
+		container = $(this).closest('div');
+		if($(obj).find('input[type=checkbox]').not(':checked').length > 0) {
+			container.find('.mark-all-ingroup').prop('checked', false);
+		}else{
+			container.find('.mark-all-ingroup').prop('checked', true);
+		}
+	});
+
+	$('.role-group-list input[type=checkbox]').on('change', function() {
+		container = $(this).closest('div');
+		if(container.find('.role-group-list input[type=checkbox]:checked').length < container.find('.role-group-list input[type=checkbox]').length) {
+			console.log(container.find('.mark-all-ingroup').prop('checked', false));
+		}else{
+			container.find('.mark-all-ingroup').prop('checked', true);
+		}
+	});
+
+
+	$('input.mark-all-ingroup').on('change', function() {
+		li = $(this).closest('div').find('li.list-group-item');
+		//console.log(li.find('input[type=checkbox]:checked').length == li.find('input[type=checkbox]'));
+		if( li.find('input[type=checkbox]:checked').length == li.find('input[type=checkbox]').length ) {
+			li.find('input[type=checkbox]').prop('checked', false);
+		} else {
+			li.find('input[type=checkbox]').prop('checked', true);
+		}
+	});
+		
+	$("[type=file]").on("change", function() {
+		// Name of file and placeholder
+		var str = this.files[0].name;
+		var file = str.substr(1, 36);
+		var dflt = $(this).attr("placeholder");
+		if ($(this).val() != "") {
+			$(this).next().text(file);
+		} else {
+			$(this).next().text(dflt);
+		}
+	});
+});
 </script>
 
 <footer class="br-footer">

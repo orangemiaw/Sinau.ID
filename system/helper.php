@@ -184,4 +184,14 @@ function convert_to_rupiah($angka) {
 	return 'Rp. '.strrev(implode('.',str_split(strrev(strval($angka)),3)));
 }
 
+function image_base64($img_file) {
+	// Read image path, convert to base64 encoding
+	$imgData = base64_encode(file_get_contents($img_file));
+
+	// Format the image SRC:  data:{mime};base64,{data};
+	$src = 'data:'.mime_content_type($img_file).';base64,'.$imgData;
+
+	return $src;
+}
+
 ?>

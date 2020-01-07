@@ -21,7 +21,7 @@ class security {
 	var $protect_click_attack = true;
 	var $protect_xss = true;
 	var $protect_cookies = true;
-	var $protect_post = true;
+	var $protect_post = false;
 	var $protect_get = true;
 	var $protect_server_ovh = true;
 	var $protect_server_kimsufi = true;

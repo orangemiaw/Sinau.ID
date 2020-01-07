@@ -75,6 +75,10 @@ class model_exam {
 		if (isset($where['participant_id'])) {
 			$arr['e.participant_id'] = $where['participant_id'];
 		}
+        
+		if (isset($where['question_id'])) {
+			$arr['e.question_id'] = $where['question_id'];
+		}
 
 		if (isset($where['question_type_id'])) {
 			$arr['t.question_type_id'] = $where['question_type_id'];

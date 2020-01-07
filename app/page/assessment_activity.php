@@ -110,6 +110,8 @@ $arr_question   = $m_question->get_results($where, $page_number, $data_per_page)
                                         <span class="badge badge-success">Correct</span>
                                     <?php elseif ($value['status'] == ANSWER_INCORRECT): ?>
                                         <span class="badge badge-info">Incorrect</span>
+                                    <?php elseif ($value['status'] == ANSWER_CHEATING): ?>
+                                        <span class="badge badge-danger">CHEATING</span>
                                     <?php endif;?>
                                 </td>
                             </tr>

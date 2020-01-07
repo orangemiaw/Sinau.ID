@@ -57,6 +57,10 @@ $config['assessment'] = array(
 			'key'  => 'index'
 		),
 		array(
+			'name' => 'DOING EXAM',
+			'key'  => 'exam'
+		),
+		array(
 			'name' => 'ASSESSMENT ACTIVITY',
 			'key'  => 'activity'
 		),

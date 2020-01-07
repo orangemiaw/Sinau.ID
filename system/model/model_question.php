@@ -75,6 +75,10 @@ class model_question {
 		if (isset($where['question_id'])) {
 			$arr['q.question_id'] = $where['question_id'];
 		}
+        
+		if (isset($where['question_type_id'])) {
+			$arr['q.question_type_id'] = $where['question_type_id'];
+		}
 
 		if (isset($where['question_type'])) {
 			$arr['LOWER(t.question_type)'] = strtolower($where['question_type']);

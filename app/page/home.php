@@ -4,12 +4,15 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title><?=TITLE;?> - <?=JARGON;?></title>
+		<title>SINAU.ID</title>
+		<!-- Google font -->
 		<link href="https://fonts.googleapis.com/css?family=Lato:700%7CMontserrat:400,600" rel="stylesheet">
-		<link rel="stylesheet" href="<?=HTTP;?>app/theme/portal/css/bootstrap.min.css">
-		<link href="<?=HTTP;?>app/theme/portal/css/font-awesome.min.css">
-		
-		<link rel="stylesheet" src="<?=HTTP;?>app/theme/portal/css/style.css">
+		<!-- Bootstrap -->
+		<link type="text/css" rel="stylesheet" href="<?=HTTP.'app/theme/home/css/bootstrap.min.css';?>"/>
+		<!-- FontIcon -->
+		<link rel="stylesheet" href="<?=HTTP.'app/theme/home/css/font-awesome.min.css';?>"/>
+		<!-- Custom stlylesheet -->
+		<link type="text/css" rel="stylesheet" href="<?=HTTP.'app/theme/home/css/style.css';?>"/>
 
     </head>
 	<body>
@@ -20,8 +23,8 @@
 				<div class="navbar-header">
 					<!-- Logo -->
 					<div class="navbar-brand">
-						<a class="logo" href="<?=HTTP;?>">
-							<img src="<?=HTTP;?>app/theme/portal/img/logosinau.png" alt="logo">
+						<a class="logo" href="index.html">
+							<img src="<?=HTTP.'app/theme/home/img/logosinau.png';?>" alt="logo">
 						</a>
 					</div>
 					<!-- /Logo -->
@@ -36,7 +39,7 @@
 				<!-- Navigation -->
 				<nav id="nav">
 					<ul class="main-menu nav navbar-nav navbar-right">
-						<li><a href="<?=HTTP;?>">Home</a></li>
+						<li><a href="home.php">Home</a></li>
 						<li><a href="#">About</a></li>
 						<li><a href="#">Courses</a></li>
 						<li><a href="#">Premium</a></li>
@@ -51,7 +54,7 @@
 
 		<!-- Home -->
 		<div id="home" class="hero-area">
-			<div class="bg-image bg-parallax overlay" style="background-image:url(<?=HTTP;?>app/theme/portal/img/home-background.jpg)"></div>
+			<div class="bg-image bg-parallax overlay" style="background-image:url(<?=HTTP.'app/theme/home/img/home-background.jpg';?>)"></div>
 			<div class="home-wrapper">
 				<div class="container">
 					<div class="row">
@@ -59,7 +62,7 @@
 							<h1 class="white-text1">A GOOD WAY TO LEARN</h1>
 							<p class="lead white-text">Sinau.id memberikan fitur reguler dan premium untuk penggunanya.
 							dan melakukan ujian secara online untuk mengetahui seberapa banyak materi yang telah dikuasai.</p>
-							<a class="main-button icon-button" href="#">Get Started!</a>
+							<a class="main-button icon-button" href="<?=HTTP.'?page=dashboard';?>">Get Started!</a>
 						</div>
 					</div>
 				</div>
@@ -112,7 +115,7 @@
 
 					<div class="col-md-6">
 						<div class="about-img">
-							<img src="<?=HTTP;?>app/theme/portal/img/about.png" alt="">
+							<img src="<?=HTTP.'app/theme/home/img/about.png';?>" alt="">
 						</div>
 					</div>
 
@@ -149,7 +152,7 @@
 						<div class="col-md-3 col-sm-6 col-xs-6">
 							<div class="course">
 								<a href="#" class="course-img">
-									<img src="<?=HTTP;?>app/theme/portal/img/course01.jpg" alt="">
+									<img src="<?=HTTP.'app/theme/home/img/course01.jpg';?>" alt="">
 									<i class="course-link-icon fa fa-link"></i>
 								</a>
 								<a class="course-title" href="#">Beginner to Pro in Excel: Financial Modeling and Valuation</a>
@@ -165,7 +168,7 @@
 						<div class="col-md-3 col-sm-6 col-xs-6">
 							<div class="course">
 								<a href="#" class="course-img">
-									<img src="<?=HTTP;?>app/theme/portal/img/course02.jpg" alt="">
+									<img src="<?=HTTP.'app/theme/home/img/course02.jpg';?>" alt="">
 									<i class="course-link-icon fa fa-link"></i>
 								</a>
 								<a class="course-title" href="#">Introduction to CSS </a>
@@ -181,7 +184,7 @@
 						<div class="col-md-3 col-sm-6 col-xs-6">
 							<div class="course">
 								<a href="#" class="course-img">
-									<img src="<?=HTTP;?>app/theme/portal/img/course03.jpg" alt="">
+									<img src="<?=HTTP.'app/theme/home/img/course03.jpg';?>" alt="">
 									<i class="course-link-icon fa fa-link"></i>
 								</a>
 								<a class="course-title" href="#">The Ultimate Drawing Course | From Beginner To Advanced</a>
@@ -196,7 +199,7 @@
 						<div class="col-md-3 col-sm-6 col-xs-6">
 							<div class="course">
 								<a href="#" class="course-img">
-									<img src="<?=HTTP;?>app/theme/portal/img/course04.jpg" alt="">
+									<img src="<?=HTTP.'app/theme/home/img/course04.jpg';?>" alt="">
 									<i class="course-link-icon fa fa-link"></i>
 								</a>
 								<a class="course-title" href="#">The Complete Web Development Course</a>
@@ -218,7 +221,7 @@
 						<div class="col-md-3 col-sm-6 col-xs-6">
 							<div class="course">
 								<a href="#" class="course-img">
-									<img src="<?=HTTP;?>app/theme/portal/img/course05.jpg" alt="">
+									<img src="<?=HTTP.'app/theme/home/img/course05.jpg';?>" alt="">
 									<i class="course-link-icon fa fa-link"></i>
 								</a>
 								<a class="course-title" href="#">PHP Tips, Tricks, and Techniques</a>
@@ -234,7 +237,7 @@
 						<div class="col-md-3 col-sm-6 col-xs-6">
 							<div class="course">
 								<a href="#" class="course-img">
-									<img src="<?=HTTP;?>app/theme/portal/img/course06.jpg" alt="">
+									<img src="<?=HTTP.'app/theme/home/img/course06.jpg';?>" alt="">
 									<i class="course-link-icon fa fa-link"></i>
 								</a>
 								<a class="course-title" href="#">All You Need To Know About Web Design</a>
@@ -250,7 +253,7 @@
 						<div class="col-md-3 col-sm-6 col-xs-6">
 							<div class="course">
 								<a href="#" class="course-img">
-									<img src="<?=HTTP;?>app/theme/portal/img/course07.jpg" alt="">
+									<img src="<?=HTTP.'app/theme/home/img/course07.jpg';?>" alt="">
 									<i class="course-link-icon fa fa-link"></i>
 								</a>
 								<a class="course-title" href="#">How to Get Started in Photography</a>
@@ -267,7 +270,7 @@
 						<div class="col-md-3 col-sm-6 col-xs-6">
 							<div class="course">
 								<a href="#" class="course-img">
-									<img src="<?=HTTP;?>app/theme/portal/img/course08.jpg" alt="">
+									<img src="<?=HTTP.'app/theme/home/img/course08.jpg';?>" alt="">
 									<i class="course-link-icon fa fa-link"></i>
 								</a>
 								<a class="course-title" href="#">Typography From A to Z</a>
@@ -301,7 +304,7 @@
 		<div id="cta" class="section">
 
 			<!-- Backgound Image -->
-			<div class="bg-image bg-parallax overlay" style="background-image:url(<?=HTTP;?>app/theme/portal/img/cta1-background.jpg)"></div>
+			<div class="bg-image bg-parallax overlay" style="background-image:url(<?=HTTP.'app/theme/home/img/cta1-background.jpg';?>)"></div>
 			<!-- /Backgound Image -->
 
 			<!-- container -->
@@ -329,7 +332,7 @@
 		<div id="contact-cta" class="section">
 
 			<!-- Backgound Image -->
-			<div class="bg-image bg-parallax overlay" style="background-image:url(<?=HTTP;?>app/theme/portal/img/cta2-background.jpg)"></div>
+			<div class="bg-image bg-parallax overlay" style="background-image:url(<?=HTTP.'/app/theme/home/img/cta2-background.jpg';?>)"></div>
 			<!-- Backgound Image -->
 
 			<!-- container -->
@@ -365,8 +368,8 @@
 					<!-- footer logo -->
 					<div class="col-md-6">
 						<div class="footer-logo">
-							<a class="logo" href="<?=HTTP;?>">
-								<img src="<?=HTTP;?>app/theme/portal/img/logosinau1.png" alt="logo">
+							<a class="logo" href="index.html">
+								<img src="<?=HTTP.'app/theme/home/img/logosinau1.png';?>" alt="logo">
 							</a>
 						</div>
 					</div>
@@ -375,7 +378,7 @@
 					<!-- footer nav -->
 					<div class="col-md-6">
 						<ul class="footer-nav">
-							<li><a href="<?=HTTP;?>">Home</a></li>
+							<li><a href="index.html">Home</a></li>
 							<li><a href="#">About</a></li>
 							<li><a href="#">Courses</a></li>
 							<li><a href="#">Premium</a></li>
@@ -426,9 +429,9 @@
 
 
 		<!-- jQuery Plugins -->
-		<script src="<?=HTTP;?>app/theme/portal/js/jquery.min.js"></script>
-		<script src="<?=HTTP;?>app/theme/portal/js/bootstrap.min.js"></script>
-		<script src="<?=HTTP;?>app/theme/portal/js/main.js"></script>
+		<script type="text/javascript" src="<?=HTTP.'app/theme/home/js/jquery.min.js';?>"></script>
+		<script type="text/javascript" src="<?=HTTP.'app/theme/home/js/bootstrap.min.js';?>"></script>
+		<script type="text/javascript" src="<?=HTTP.'app/theme/home/js/main.js';?>"></script>
 
 	</body>
 </html>
