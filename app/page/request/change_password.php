@@ -5,6 +5,12 @@ $action = isset($_GET['act']) ? $_GET['act'] : '';
 $password = isset($_POST['txtNewPassword']) ? $_POST['txtNewPassword'] : '';
 $repeat_password = isset($_POST['txtNewPasswordVerify']) ? $_POST['txtNewPasswordVerify'] : '';
 
+if(empty($password) || empty($repeat_password)) {
+    $callback['noty'] = array('type' => 'error', 'text' => 'Password can not be empty !');
+	ajax_output('', 400, $callback);
+    return;
+}
+
 if($password != $repeat_password) {
     $callback['noty'] = array('type' => 'error', 'text' => 'Password not match !');
 	ajax_output('', 400, $callback);

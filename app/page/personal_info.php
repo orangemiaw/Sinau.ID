@@ -11,14 +11,21 @@ if (!isset($_SESSION['role']->account_profile->detail)) {
 $title = "Personal Info";
 include ROOT."app/theme/header.php";
 
-if($_SESSION['is_admin']) {
+if(isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == true) {
     include PATH_MODEL . 'model_admin.php';
     $m_admin = new model_admin($db);
     $arr_data = $m_admin->get_row(array("admin_id" => $_SESSION['id']));
 } else {
     include PATH_MODEL . 'model_participant.php';
-    $m_participant = new model_participant($db);
-    $arr_data = $m_participant->get_row(array("participant_id" => $_SESSION['id']));
+	include PATH_MODEL . 'model_regencie.php';
+	include PATH_MODEL . 'model_province.php';
+
+    $m_participant 	= new model_participant($db);
+    $m_regencie 	= new model_regencie($db);
+    $m_province 	= new model_province($db);
+	$arr_data 		= $m_participant->get_row(array("participant_id" => $_SESSION['id']));
+	$arr_regencie	= $m_regencie->get_results(array(), 'all');
+	$arr_province	= $m_province->get_results(array(), 'all');
 }
 
 ?>
@@ -33,7 +40,7 @@ if($_SESSION['is_admin']) {
 
     <form id="form-update" class="card shadow-base bd-0">
         <div class="card-body">
-            <?php if(isset($_SESSION['is_admin'])):?>
+            <?php if(isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == true):?>
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
@@ -87,9 +94,15 @@ if($_SESSION['is_admin']) {
                 </div>
             <?php else:?>
 				<div class="row">
+					<div class="col-md-12 tx-center">
+						<div class="form-group">
+							<label class="form-control-label">Current Photo </label><br />
+                            <img src="<?=$arr_data['profile_image'] ? HTTP . $arr_data['profile_image'] : HTTP . DEFAULT_PROFILE_IMAGE;?>" width="300" />
+						</div>
+					</div>
 					<div class="col-md-12">
 						<div class="form-group">
-							<label class="form-control-label">Card ID Photo </label>
+							<label class="form-control-label">Card ID Photo (KTP/SIM/KTM) </label>
                             <div class="custom-file">
                                 <input type="file" name="image_file" class="custom-file-input" id="customFile" placeholder="Choose file" required autofocus>
                                 <label class="custom-file-label" for="customFile">Choose file</label>
@@ -113,24 +126,29 @@ if($_SESSION['is_admin']) {
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="form-control-label">Regencie </label>
-							<select id="select-brand" name="cbUserGroup" class="form-control select-two" data-placeholder="-- Select --" >
+							<label class="form-control-label">Province </label>
+							<select id="select-brand" name="cbProvince" class="form-control select-two" data-placeholder="-- Select --" >
 								<option></option>
-								<?php foreach ($arr_user_group as $value): ?>
-									<option value="<?php print $value->user_group_id;?>" >
-										<?php print $value->user_group_name;?>
+								<?php foreach ($arr_province as $value): ?>
+									<option value="<?php print $value['province_id'];?>" <?=set_select($value['province_id'], $arr_data['province']);?> >
+										<?php print $value['name'];?>
 									</option>
 								<?php endforeach;?>
 							</select>
-
-							<input class="form-control" type="text" name="txtRegencie" value="<?=$arr_data['regencie'];?>">
 							<ul class="fields-message"></ul>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							<label class="form-control-label">Province </label>
-							<input class="form-control" type="text" name="txtProvince" value="<?=$arr_data['province'];?>">
+							<label class="form-control-label">Regencie </label>
+							<select id="select-brand" name="cbRegencie" class="form-control select-two" data-placeholder="-- Select --" >
+								<option></option>
+								<?php foreach ($arr_regencie as $value): ?>
+									<option value="<?php print $value['regencie_id'];?>" <?=set_select($value['regencie_id'], $arr_data['regencie']);?> >
+										<?php print $value['name'];?>
+									</option>
+								<?php endforeach;?>
+							</select>
 							<ul class="fields-message"></ul>
 						</div>
 					</div>
@@ -204,15 +222,22 @@ $(document).ready(function() {
 
 	$('#form-update').on('submit', function(event){
 		event.preventDefault();
-		var request 	= '<?=$_GET['page'] . '&act=update&id=' . $_SESSION['id']*1909;?>',
-			form 		= $(this);
+		var request 	= '?do=<?=$_GET['page'] . '&act=update&id=' . $_SESSION['id']*1909;?>',
+			form 		= $(this),
+            data    = new FormData(this);
 
 		loading(form, 'show');
-		ajax_post(request, form.serialize(), function(result) {
-
-			init_meta(result.meta);
-			get_action_log();
-			loading(form, 'hide');
+        $.ajax({
+            type: 'POST',
+            url: request,
+            data: data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (result) {
+                init_meta(result.meta);
+                loading(form, 'hide');
+            }
 		});
 	});
 

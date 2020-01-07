@@ -37,7 +37,7 @@ if(isset($_POST['login']) && isset($_POST['passwd']) && !empty($_POST['login']) 
 	
 	$_SESSION['login'] 		= true;
 	$_SESSION['is_admin'] 	= $admin ? true : false;
-	$_SESSION['username'] 	= $admin ? $admin['admin_login'] : $admin['participant_login'];
+	$_SESSION['username'] 	= $admin ? $admin['admin_login'] : $participant['participant_login'];
 	$_SESSION['role'] 		= $admin ? json_decode($admin['admin_group_role']) : json_decode($participant['participant_group_role']);
 	$_SESSION['group'] 		= $admin ? $admin['admin_group_name'] : $participant['participant_group_name'];
 	$_SESSION['group_id']	= $admin ? $admin['admin_group_id'] : $participant['participant_group_id'];

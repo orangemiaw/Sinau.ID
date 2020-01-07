@@ -10,7 +10,7 @@ class model_regencie {
         $this->db = $dbconnect;
     }
 
-    public function get_results($where = array(), $page = 1, $show = 25, $order_val = 'DESC', $order_key = 'payment_id') {
+    public function get_results($where = array(), $page = 1, $show = 25, $order_val = 'ASC', $order_key = 'regencie_id') {
         $query  = "SELECT regencie_id, province_id, name";
         $query .= " FROM " . $this->table_name . " ";
 
