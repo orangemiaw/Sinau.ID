@@ -69,7 +69,7 @@ $arr_payment  = $m_payment->get_results($where, $page_number, $data_per_page);
                                 <td class="align-middle text-center">
                                     <strong><?=($value['transaction_id']);?></strong>
                                 </td>
-                                <td class="align-middle text-center     ">
+                                <td class="align-middle text-center">
                                     <strong><?=($value['invoice_id']);?></strong>
                                 </td>
                                 <td class="align-middle text-center">
