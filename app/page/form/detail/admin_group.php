@@ -22,6 +22,13 @@ include 'system/admin_rules.php';
 $arr_available_role = $config;
 $m_admin_group      = new model_admin_group($db);
 $arr_admin_group    = $m_admin_group->get_row(array("admin_group_id" => $_GET['id']/1909));
+
+if(!$arr_admin_group) {
+    $notice->addError("Data not found in our database !");
+    header("location:".HTTP."?page=" . $_GET['detail']);
+    return;
+}
+
 $arr_role           = json_decode($arr_admin_group['admin_group_role']);
 
 ?>

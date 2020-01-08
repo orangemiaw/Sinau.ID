@@ -22,6 +22,13 @@ include 'system/participant_rules.php';
 $arr_available_role     = $config;
 $m_participant_group    = new model_participant_group($db);
 $arr_participant_group  = $m_participant_group->get_row(array("participant_group_id" => $_GET['id']/1909));
+
+if(!$arr_participant_group) {
+    $notice->addError("Data not found in our database !");
+    header("location:".HTTP."?page=" . $_GET['detail']);
+    return;
+}
+
 $arr_role               = json_decode($arr_participant_group['participant_group_role']);
 
 ?>

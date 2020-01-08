@@ -14,13 +14,13 @@ if(!isset($_GET['id']) || empty($_GET['id'])) {
     return; 
 }
 
-$title = "Detail Admin Group";
+$title = "Detail Module Type";
 include ROOT."app/theme/header.php";
-include PATH_MODEL . 'model_question_group.php';
+include PATH_MODEL . 'model_module_type.php';
 
-$m_question_group   = new model_question_group($db);
-$arr_question_group = $m_question_group->get_row(array("question_group_id" => $_GET['id']/1909));
-if(!$arr_question_group) {
+$m_module_type   = new model_module_type($db);
+$arr_module_type = $m_module_type->get_row(array("module_type_id" => $_GET['id']/1909));
+if(!$arr_module_type) {
     $notice->addError("Data not found in our database !");
     header("location:".HTTP."?page=" . $_GET['detail']);
     return;
@@ -42,20 +42,29 @@ if(!$arr_question_group) {
 			<div class="row">
 				<div class="col-md-6">
 					<div class="form-group">
-						<label class="form-control-label">Group Name: <span class="tx-danger">*</span></label>
-						<input type="text" name="txtGroupName" value="<?=$arr_question_group['question_group_name'];?>" class="form-control" disabled="disabled">
+						<label class="form-control-label">Created: </label>
+						<input type="text" value="<?=timestamp_to_date($arr_module_type['created']);?>" class="form-control" disabled="disabled">
 						<ul class="fields-message"></ul>
 					</div>
 				</div>
-
 				<div class="col-md-6">
 					<div class="form-group">
-						<label class="form-control-label">Status: <span class="tx-danger">*</span></label>
-						<select class="form-control select-two" disabled="disabled" name="cbStatus" data-placeholder=" -- Pilih Status -- ">
-							<option></option>
-							<option value="<?=STATUS_ENABLE;?>" <?php echo set_select(STATUS_ENABLE, $arr_question_group['question_group_status']); ?>>Enable</option>
-							<option value="<?=STATUS_DISABLE;?>" <?php echo set_select(STATUS_DISABLE, $arr_question_group['question_group_status']); ?>>Disable</option>
-						</select>
+						<label class="form-control-label">Module Type: </label>
+						<input type="text" value="<?=$arr_module_type['module_type'];?>" class="form-control" disabled="disabled">
+						<ul class="fields-message"></ul>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="form-control-label">Module Group: </label>
+						<input type="text" value="<?=$arr_module_type['module_group_name'];?>" class="form-control" disabled="disabled">
+						<ul class="fields-message"></ul>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label class="form-control-label">Module Total: </label>
+						<input type="text" value="<?=$arr_module_type['total'];?>" class="form-control" disabled="disabled">
 						<ul class="fields-message"></ul>
 					</div>
 				</div>
