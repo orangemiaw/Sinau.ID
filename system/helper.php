@@ -110,6 +110,12 @@ function set_select($value, $condition) {
 	return "";
 }
 
+function set_select_disable($value, $condition) {
+	if($value == $condition)
+		return "selected";
+	return "disabled";
+}
+
 function set_checkbox($value) {
 	if($value == 1)
 		return "checked";

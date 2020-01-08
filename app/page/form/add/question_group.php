@@ -1,6 +1,5 @@
 <?php
 defined('SINAUID') OR exit('No direct script access allowed');
-echo "aaa";
 
 // Chcek role and block if not have access role
 if (!isset($_SESSION['role']->{$_GET['add']}->add)) {

@@ -224,7 +224,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		var request 	= '?do=<?=$_GET['page'] . '&act=update&id=' . $_SESSION['id']*1909;?>',
 			form 		= $(this),
-            data    = new FormData(this);
+            data    	= new FormData(this);
 
 		loading(form, 'show');
         $.ajax({

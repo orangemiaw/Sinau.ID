@@ -2,6 +2,7 @@
 
 define('STATUS_ENABLE', 1);
 define('STATUS_DISABLE', 2);
+define('STATUS_TERMINATE', 3);
 
 define('FORGOT_ACTIVE', 1);
 define('FORGOT_DEACTIVE', 2);
