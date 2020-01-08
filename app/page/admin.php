@@ -1,21 +1,24 @@
 <?php
-$title = "Question Group";
+$title = "Admin";
 include ROOT."app/theme/header.php";
-require_once PATH_MODEL . 'model_question_group.php';
+require_once PATH_MODEL . 'model_admin.php';
 
 $name   = isset($_GET['txtName']) ? $_GET['txtName'] : false;
+$login  = isset($_GET['txtLogin']) ? $_GET['txtLogin'] : false;
 $status = isset($_GET['cbStatus']) ? $_GET['cbStatus'] : false;
 
 if($name)
-    $where['question_group_name'] = $name;
+    $where['admin_name'] = $name;
+if($login)
+    $where['admin_login'] = $login;
 if($status)
-    $where['question_group_status'] = $status;
+    $where['admin_status'] = $status;
 
-$m_question_group   = new model_question_group($db);
-$page_number        = is_numeric($_GET['hal']) ? $_GET['hal'] : 1;
-$data_per_page      = 20;
-$total_rows         = $m_question_group->total_rows($where);
-$arr_question_group = $m_question_group->get_results($where, $page_number, $data_per_page);
+$m_admin    = new model_admin($db);
+$page_number      = is_numeric($_GET['hal']) ? $_GET['hal'] : 1;
+$data_per_page    = 20;
+$total_rows       = $m_admin->total_rows($where);
+$arr_admin  = $m_admin->get_results($where, $page_number, $data_per_page);
 ?>
     <div class="br-mainpanel">
 		<div class="br-pagetitle">
@@ -24,7 +27,6 @@ $arr_question_group = $m_question_group->get_results($where, $page_number, $data
 		<div class="br-pagebody">
 
         <!-- Main content -->
-
         <?=$GLOBALS['notice']->showSuccess();?>
         <?=$GLOBALS['notice']->showError();?>
 
@@ -34,12 +36,20 @@ $arr_question_group = $m_question_group->get_results($where, $page_number, $data
             </div>
             <div class="bg-gray-300 bd pd-15 mg-b-15 rounded">
                 <form method="GET" action="<?=HTTP;?>">
-                    <input type="hidden" name="page" value="question_group">
+                    <input type="hidden" name="page" value="admin">
                     <div class="row row-sm">
+
+                    
                         <div class="col-lg-2">
                             <div class="form-group">
-                                <label class="form-control-label">Group Name</label>
-                                <input type="text" name="txtName" class="form-control" placeholder="Group Name" value="<?=!empty($_GET['txtName']) ? $_GET['txtName'] : '';?>">
+                                <label class="form-control-label">Login :</label>
+                                <input name="txtLogin" value="<?=!empty($_GET['txtLogin']) ? $_GET['txtLogin'] : '';?>" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label class="form-control-label">Name :</label>
+                                <input name="txtName" value="<?=!empty($_GET['txtName']) ? $_GET['txtName'] : '';?>" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="col-lg-2">
@@ -66,28 +76,32 @@ $arr_question_group = $m_question_group->get_results($where, $page_number, $data
             <div class="card-block mg-b-15">
 
                 <?php if (isset($_SESSION['role']->{$_GET['page']}->add)): ?>
-                    <a href="<?=HTTP.'?add=question_group';?>" class="btn btn-primary">
+                    <a href="<?=HTTP.'?add=admin';?>" class="btn btn-primary">
                         <i class="ion ion-md-add-circle-outline"></i> ADD
                     </a>
                 <?php endif;?>
 
             </div>
 
-            <?php if (!empty($arr_question_group)): ?>
+            <?php if (!empty($arr_admin)): ?>
 
                 <div class="bd bd-gray-300 rounded table-responsive">
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th class="min-w align-middle">Created<br>Updated</th>
-                                <th class="align-middle">Group Name</th>
-                                <th class="text-center align-middle">Status</th>
-                                <th class="text-center align-middle">Action</th>
+                            <tr class="col-align-middle">
+                                <th>Updated<br>Created</th>
+                                <th>Name</th>
+                                <th>Login</th>
+                                <th>Email</th>
+                                <th>Group</th>
+                                <th class="text-center">Status</th>
+                                <th>Last Login<br>IP</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            <?php foreach($arr_question_group as $value): ?>
+                            <?php foreach($arr_admin as $value): ?>
                             <tr>
                                 <td class="min-w">
 
@@ -106,30 +120,44 @@ $arr_question_group = $m_question_group->get_results($where, $page_number, $data
 
                                 </td>
                                 <td class="align-middle">
-                                    <strong><?=strtoupper($value['question_group_name']);?></strong>
+                                    <?=$value['admin_name'];?>
+                                </td>
+                                <td class="align-middle">
+                                    <?=$value['admin_login'];?>
+                                </td>
+                                <td class="align-middle">
+                                    <a href="mailto:<?=$value['admin_email'];?>"><?=$value['admin_email'];?></a>
+                                </td>
+                                <td class="align-middle">
+                                    <?=$value['admin_group_name'];?>
                                 </td>
                                 <td class="align-middle text-center">
-                                    <?php if ($value['question_group_status'] == STATUS_ENABLE): ?>
+                                    <?php if ($value['admin_status'] == STATUS_ENABLE): ?>
                                         <span class="badge badge-success">Enable</span>
-                                    <?php elseif ($value['question_group_status'] == STATUS_DISABLE): ?>
+                                    <?php elseif ($value['admin_status'] == STATUS_DISABLE): ?>
                                         <span class="badge badge-info">Disable</span>
                                     <?php endif;?>
                                 </td>
+                                <td class="align-middle">
+                                    <?=timestamp_to_date($value['admin_last_login']);?>
+                                    <br>
+                                    <a target="_blank" href="https://demo.ip-api.com/json/<?=$value['admin_last_ip'];?>"><?=$value['admin_last_ip'];?></a>
+                                </td>
                                 <td class="min-w text-center align-middle">
                                     <?php if (isset($_SESSION['role']->{$_GET['page']}->update)): ?>
-                                        <a href="<?=HTTP . '?update=question_group&id=' . $value['question_group_id']*1909;?>" class="btn btn-outline-primary btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Ubah">
+                                        <a href="<?=HTTP . '?update=' . $_GET['page'] . '&id=' . $value['admin_id']*1909;?>" class="btn btn-outline-primary btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Ubah">
                                             <div class="tx-20"><i class="icon ion-md-create"></i></div>
                                         </a>
                                     <?php endif;?>
 
                                     <?php if (isset($_SESSION['role']->{$_GET['page']}->detail)): ?>
-                                        <a href="<?=HTTP . '?detail=question_group&id=' . $value['question_group_id']*1909;?>" class="btn btn-outline-info btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Detail">
+                                        <a href="<?=HTTP . '?detail=' . $_GET['page'] . '&id=' . $value['admin_id']*1909;?>" class="btn btn-outline-info btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Detail">
                                             <div class="tx-20"><i class="icon ion-md-camera"></i></div>
                                         </a>
                                     <?php endif;?>
                                     
-									<?php if (isset($_SESSION['role']->{$_GET['page']}->delete) && $value['question_group_name'] != 'Super Admin'): ?>
-									<a href="javascript:;" onclick="deleteConfirm('<?=HTTP . '?do=question_group&act=delete&id=' . $value['question_group_id']*1909;?>');" class="btn btn-outline-danger btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Delete">
+									<?php if (isset($_SESSION['role']->{$_GET['page']}->terminate)): ?>
+									<a href="javascript:;" onclick="terminateConfirm('<?=HTTP . '?do=' . $_GET['page'] . '&act=terminate&id=' . $value['admin_id']*1909;?>');" class="btn btn-outline-danger btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Terminate">
 										<div class="tx-20"><i class="ion ion-md-trash"></i></div>
 									</a>
 									<?php endif;?>
@@ -165,7 +193,7 @@ $arr_question_group = $m_question_group->get_results($where, $page_number, $data
         </div>
 
         <script>
-            function deleteConfirm(link){
+            function terminateConfirm(link){
                 Swal({
                     title: 'Are you sure?',
                     text: "You will not be able to return this!",

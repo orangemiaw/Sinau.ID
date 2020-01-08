@@ -15,6 +15,22 @@ class model_admin {
         return $this->db->numRows();
     }
 
+    public function total_rows($where = array()) {
+        $query  = "SELECT a.admin_id, a.created, a.updated, a.created_by, a.updated_by, a.admin_name, a.admin_login, a.admin_email, a.admin_password, a.admin_last_login, a.admin_last_ip, a.admin_last_browser, a.admin_group_id, a.admin_forgot_code, a.admin_forgot_status, a.admin_status, g.admin_group_name, g.admin_group_role, g.admin_group_status";
+        $query .= " FROM " . $this->table_name . " a ";
+        $query .= " JOIN admin_group g ON a.admin_group_id = g.admin_group_id ";
+        
+	    if (count($where) > 0) {
+            $queryWhere = $this->where($where);
+            if($queryWhere) {
+                $query .= $queryWhere;
+            }
+        }
+
+        $this->db->go($query);
+        return $this->db->numRows();
+    }
+
     public function auth($login, $password) {
         $where = array(
 			'admin_login'        => $this->db->q($login),

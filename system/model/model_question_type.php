@@ -10,8 +10,19 @@ class model_question_type {
         $this->db = $dbconnect;
     }
 
-    public function total_rows() {
-        $this->db->go("SELECT * FROM " . $this->table_name);
+    public function total_rows($where = array()) {
+        $query  = "SELECT q.question_type_id, q.created, q.updated, q.created_by, q.updated_by, q.question_type, q.total, q.question_group_id, g.question_group_name";
+        $query .= " FROM " . $this->table_name . " q ";
+        $query .= " JOIN question_group g ON q.question_group_id = g.question_group_id ";
+        
+	    if (count($where) > 0) {
+            $queryWhere = $this->where($where);
+            if($queryWhere) {
+                $query .= $queryWhere;
+            }
+        }
+
+        $this->db->go($query);
         return $this->db->numRows();
     }
 

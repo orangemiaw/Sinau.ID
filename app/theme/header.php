@@ -167,7 +167,7 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] == false) {
 						<ul class="br-menu-sub nav flex-column">
 							<?php if (isset($_SESSION['role']->participant)): ?>
 								<li class="sub-item">
-									<a class="sub-link" href="<?=HTTP.'?page=admin';?>">Manage</a>
+									<a class="sub-link" href="<?=HTTP.'?page=participant';?>">Manage</a>
 								</li>
 							<?php endif;?>
 							<?php if (isset($_SESSION['role']->participant_group)): ?>

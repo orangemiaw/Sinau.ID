@@ -10,13 +10,25 @@ class model_question {
         $this->db = $dbconnect;
     }
 
-    public function total_rows() {
-        $this->db->go("SELECT * FROM " . $this->table_name);
+    public function total_rows($where = array()) {
+        $query  = "SELECT q.question_id, q.created, q.updated, q.created_by, q.updated_by, q.question_type_id, q.question_text, q.question_image, q.question_status, t.question_type, t.question_group_id, t.total, g.question_group_name";
+        $query .= " FROM " . $this->table_name . " q ";
+        $query .= " JOIN question_types t ON q.question_type_id = t.question_type_id ";
+        $query .= " JOIN question_group g ON t.question_group_id = g.question_group_id ";
+        
+	    if (count($where) > 0) {
+            $queryWhere = $this->where($where);
+            if($queryWhere) {
+                $query .= $queryWhere;
+            }
+        }
+
+        $this->db->go($query);
         return $this->db->numRows();
     }
 
     public function get_results($where = array(), $page = 1, $show = 25, $order_val = 'ASC', $order_key = 'q.question_id') {
-        $query  = "SELECT q.question_id, q.created, q.updated, q.created_by, q.updated_by, q.question_type_id, q.question_text, q.question_image, t.question_type, t.question_group_id, t.total, g.question_group_name";
+        $query  = "SELECT q.question_id, q.created, q.updated, q.created_by, q.updated_by, q.question_type_id, q.question_text, q.question_image, q.question_status, t.question_type, t.question_group_id, t.total, g.question_group_name";
         $query .= " FROM " . $this->table_name . " q ";
         $query .= " JOIN question_types t ON q.question_type_id = t.question_type_id ";
         $query .= " JOIN question_group g ON t.question_group_id = g.question_group_id ";
@@ -47,7 +59,7 @@ class model_question {
     }
 
     public function get_row($where = array()) {
-        $query  = "SELECT q.question_id, q.created, q.updated, q.created_by, q.updated_by, q.question_type_id, q.question_text, q.question_image, t.question_type, t.question_group_id, t.total, g.question_group_name";
+        $query  = "SELECT q.question_id, q.created, q.updated, q.created_by, q.updated_by, q.question_type_id, q.question_text, q.question_image, q.question_status, t.question_type, t.question_group_id, t.total, g.question_group_name";
         $query .= " FROM " . $this->table_name . " q ";
         $query .= " JOIN question_types t ON q.question_type_id = t.question_type_id ";
         $query .= " JOIN question_group g ON t.question_group_id = g.question_group_id ";

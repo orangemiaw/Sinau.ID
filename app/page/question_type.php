@@ -1,21 +1,18 @@
 <?php
-$title = "Question Group";
+$title = "Question Type";
 include ROOT."app/theme/header.php";
-require_once PATH_MODEL . 'model_question_group.php';
+require_once PATH_MODEL . 'model_question_type.php';
 
 $name   = isset($_GET['txtName']) ? $_GET['txtName'] : false;
-$status = isset($_GET['cbStatus']) ? $_GET['cbStatus'] : false;
 
 if($name)
-    $where['question_group_name'] = $name;
-if($status)
-    $where['question_group_status'] = $status;
+    $where['question_type'] = $name;
 
-$m_question_group   = new model_question_group($db);
+$m_question_type   = new model_question_type($db);
 $page_number        = is_numeric($_GET['hal']) ? $_GET['hal'] : 1;
 $data_per_page      = 20;
-$total_rows         = $m_question_group->total_rows($where);
-$arr_question_group = $m_question_group->get_results($where, $page_number, $data_per_page);
+$total_rows         = $m_question_type->total_rows($where);
+$arr_question_type = $m_question_type->get_results($where, $page_number, $data_per_page);
 ?>
     <div class="br-mainpanel">
 		<div class="br-pagetitle">
@@ -34,22 +31,12 @@ $arr_question_group = $m_question_group->get_results($where, $page_number, $data
             </div>
             <div class="bg-gray-300 bd pd-15 mg-b-15 rounded">
                 <form method="GET" action="<?=HTTP;?>">
-                    <input type="hidden" name="page" value="question_group">
+                    <input type="hidden" name="page" value="question_type">
                     <div class="row row-sm">
                         <div class="col-lg-2">
                             <div class="form-group">
-                                <label class="form-control-label">Group Name</label>
-                                <input type="text" name="txtName" class="form-control" placeholder="Group Name" value="<?=!empty($_GET['txtName']) ? $_GET['txtName'] : '';?>">
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label class="form-control-label">Status</label>
-                                <select name="cbStatus" class="form-control select2" data-placeholder="-- Pilih Status --">
-                                    <option value="">All</option>
-                                    <option value="<?=STATUS_ENABLE;?>" <?php echo set_select(STATUS_ENABLE, $_GET['cbStatus']); ?>>Enabled</option>
-                                    <option value="<?=STATUS_DISABLE;?>" <?php echo set_select(STATUS_DISABLE, $_GET['cbStatus']); ?>>Disabled</option>
-                                </select>
+                                <label class="form-control-label">Type Name</label>
+                                <input type="text" name="txtName" class="form-control" placeholder="Type Name" value="<?=!empty($_GET['txtName']) ? $_GET['txtName'] : '';?>">
                             </div>
                         </div>
 
@@ -66,28 +53,28 @@ $arr_question_group = $m_question_group->get_results($where, $page_number, $data
             <div class="card-block mg-b-15">
 
                 <?php if (isset($_SESSION['role']->{$_GET['page']}->add)): ?>
-                    <a href="<?=HTTP.'?add=question_group';?>" class="btn btn-primary">
+                    <a href="<?=HTTP.'?add=question_type';?>" class="btn btn-primary">
                         <i class="ion ion-md-add-circle-outline"></i> ADD
                     </a>
                 <?php endif;?>
 
             </div>
 
-            <?php if (!empty($arr_question_group)): ?>
+            <?php if (!empty($arr_question_type)): ?>
 
                 <div class="bd bd-gray-300 rounded table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th class="min-w align-middle">Created<br>Updated</th>
-                                <th class="align-middle">Group Name</th>
-                                <th class="text-center align-middle">Status</th>
-                                <th class="text-center align-middle">Action</th>
+                                <th class="align-middle">Type Name</th>
+                                <th class="align-middle">Question Group</th>
+                                <th class="text-center align-middle">Total Question</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            <?php foreach($arr_question_group as $value): ?>
+                            <?php foreach($arr_question_type as $value): ?>
                             <tr>
                                 <td class="min-w">
 
@@ -106,30 +93,29 @@ $arr_question_group = $m_question_group->get_results($where, $page_number, $data
 
                                 </td>
                                 <td class="align-middle">
+                                    <strong><?=strtoupper($value['question_type']);?></strong>
+                                </td>
+                                <td class="align-middle">
                                     <strong><?=strtoupper($value['question_group_name']);?></strong>
                                 </td>
-                                <td class="align-middle text-center">
-                                    <?php if ($value['question_group_status'] == STATUS_ENABLE): ?>
-                                        <span class="badge badge-success">Enable</span>
-                                    <?php elseif ($value['question_group_status'] == STATUS_DISABLE): ?>
-                                        <span class="badge badge-info">Disable</span>
-                                    <?php endif;?>
+                                <td class="text-center align-middle">
+                                    <strong><?=strtoupper($value['total']);?></strong>
                                 </td>
                                 <td class="min-w text-center align-middle">
                                     <?php if (isset($_SESSION['role']->{$_GET['page']}->update)): ?>
-                                        <a href="<?=HTTP . '?update=question_group&id=' . $value['question_group_id']*1909;?>" class="btn btn-outline-primary btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Ubah">
+                                        <a href="<?=HTTP . '?update=question_type&id=' . $value['question_type_id']*1909;?>" class="btn btn-outline-primary btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Ubah">
                                             <div class="tx-20"><i class="icon ion-md-create"></i></div>
                                         </a>
                                     <?php endif;?>
 
                                     <?php if (isset($_SESSION['role']->{$_GET['page']}->detail)): ?>
-                                        <a href="<?=HTTP . '?detail=question_group&id=' . $value['question_group_id']*1909;?>" class="btn btn-outline-info btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Detail">
+                                        <a href="<?=HTTP . '?detail=question_type&id=' . $value['question_type_id']*1909;?>" class="btn btn-outline-info btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Detail">
                                             <div class="tx-20"><i class="icon ion-md-camera"></i></div>
                                         </a>
                                     <?php endif;?>
                                     
-									<?php if (isset($_SESSION['role']->{$_GET['page']}->delete) && $value['question_group_name'] != 'Super Admin'): ?>
-									<a href="javascript:;" onclick="deleteConfirm('<?=HTTP . '?do=question_group&act=delete&id=' . $value['question_group_id']*1909;?>');" class="btn btn-outline-danger btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Delete">
+									<?php if (isset($_SESSION['role']->{$_GET['page']}->delete) && $value['question_type_name'] != 'Super Admin'): ?>
+									<a href="javascript:;" onclick="deleteConfirm('<?=HTTP . '?do=question_type&act=delete&id=' . $value['question_type_id']*1909;?>');" class="btn btn-outline-danger btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Delete">
 										<div class="tx-20"><i class="ion ion-md-trash"></i></div>
 									</a>
 									<?php endif;?>

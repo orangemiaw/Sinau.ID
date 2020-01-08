@@ -10,6 +10,22 @@ class model_participant {
         $this->db = $dbconnect;
     }
 
+    public function total_rows($where = array()) {
+        $query  = "SELECT p.participant_id, p.created, p.updated, p.created_by, p.updated_by, p.participant_name, p.participant_login, p.participant_email, p.participant_password, p.participant_last_login, p.participant_last_ip, p.participant_last_browser, p.participant_group_id, p.profile_image, p.address, p.regencie, p.province, p.postal_code, p.telephone, p.participant_forgot_code, p.participant_forgot_status, p.participant_status, g.participant_group_name, g.participant_group_role, g.participant_group_status";
+        $query .= " FROM " . $this->table_name . " p ";
+        $query .= " JOIN participant_group g ON p.participant_group_id = g.participant_group_id ";
+        
+	    if (count($where) > 0) {
+            $queryWhere = $this->where($where);
+            if($queryWhere) {
+                $query .= $queryWhere;
+            }
+        }
+
+        $this->db->go($query);
+        return $this->db->numRows();
+    }
+
     public function auth($login, $password) {
         $where = array(
 			'participant_login'        => $this->db->q($login),

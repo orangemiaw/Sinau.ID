@@ -65,6 +65,10 @@ $config['admin'] = array(
 			'key'  => 'detail'
 		),
 		array(
+			'name' => 'DELETE',
+			'key'  => 'delete'
+		),
+		array(
 			'name' => 'CHANGE PASSWORD',
 			'key'  => 'change_password'
 		),

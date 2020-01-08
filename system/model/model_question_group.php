@@ -10,8 +10,18 @@ class model_question_group {
         $this->db = $dbconnect;
     }
 
-    public function total_rows() {
-        $this->db->go("SELECT * FROM " . $this->table_name);
+    public function total_rows($where = array()) {
+        $query  = "SELECT question_group_id, created, updated, created_by, updated_by, question_group_name, question_group_status";
+        $query .= " FROM " . $this->table_name . " ";
+        
+	    if (count($where) > 0) {
+            $queryWhere = $this->where($where);
+            if($queryWhere) {
+                $query .= $queryWhere;
+            }
+        }
+
+        $this->db->go($query);
         return $this->db->numRows();
     }
 
