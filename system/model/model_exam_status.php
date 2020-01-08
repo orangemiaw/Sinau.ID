@@ -73,6 +73,10 @@ class model_exam_status {
 		if (isset($where['participant_id'])) {
 			$arr['e.participant_id'] = $where['participant_id'];
 		}
+        
+		if (isset($where['question_type_id'])) {
+			$arr['e.question_type_id'] = $where['question_type_id'];
+		}
 
         if (count($arr) > 0) {
             $query = " WHERE ";

@@ -15,6 +15,11 @@ class model_exam {
         return $this->db->numRows();
     }
 
+    public function get_status($participant_id, $status) {
+        $this->db->go("SELECT * FROM " . $this->table_name . " WHERE participant_id = '" . $participant_id . "' AND status = '" . $status . "'");
+        return $this->db->numRows();
+    }
+
     public function get_results($where = array(), $page = 1, $show = 25, $order_val = 'ASC', $order_key = 'e.participant_id') {
         $query  = "SELECT e.participant_id, e.created, e.updated, e.created_by, e.updated_by, e.question_number, e.question_id, e.answer_id, e.status, e.time, q.question_type_id, t.question_type";
         $query .= " FROM " . $this->table_name . " e ";
@@ -78,6 +83,10 @@ class model_exam {
         
 		if (isset($where['question_id'])) {
 			$arr['e.question_id'] = $where['question_id'];
+		}
+
+		if (isset($where['status'])) {
+			$arr['e.status'] = $where['status'];
 		}
 
 		if (isset($where['question_type_id'])) {
