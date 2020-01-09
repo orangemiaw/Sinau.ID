@@ -25,7 +25,7 @@ $config['config'] = array(
 	'name'    => 'Config',
 	'methods' => array(
 		array(
-			'name' => 'SUMMARY',
+			'name' => 'UPDATE',
 			'key'  => 'index'
 		)
 	)

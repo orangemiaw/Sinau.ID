@@ -11,7 +11,7 @@ class model_config {
     }
 
     public function get_row($where = array()) {
-        $query  = "SELECT faceai_server, faceai_login, faceai_login, paypal_sandbox_account, paypal_client_id, paypal_client_secret, paypal_live_payment, ovo_number";
+        $query  = "SELECT created, updated, created_by, updated_by, faceai_server, faceai_login, faceai_login, faceai_password, paypal_sandbox_account, paypal_client_id, paypal_client_secret, paypal_live_payment, ovo_number";
         $query .= " FROM " . $this->table_name . " ";
 
 	    if (count($where) > 0) {
