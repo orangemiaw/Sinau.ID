@@ -10,8 +10,18 @@ class model_change_log {
         $this->db = $dbconnect;
     }
 
-    public function total_rows() {
-        $this->db->go("SELECT * FROM " . $this->table_name);
+    public function total_rows($where = array()) {
+        $query  = "SELECT log_id, created, created_by, controller, action, querystring, post, url, ip, current_data, new_data, db_query, browser, method";
+        $query .= " FROM " . $this->table_name . " ";
+        
+	    if (count($where) > 0) {
+            $queryWhere = $this->where($where);
+            if($queryWhere) {
+                $query .= $queryWhere;
+            }
+        }
+
+        $this->db->go($query);
         return $this->db->numRows();
     }
 

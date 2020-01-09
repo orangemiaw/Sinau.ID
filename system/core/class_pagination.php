@@ -29,10 +29,13 @@ class pagination {
 		$jmldata= $jum; 
 		$jmlhalaman=ceil($jmldata/$this->batas); 
 		for($i=1;$i<=$jmlhalaman;$i++){
+			echo "<ul class=\"pagination pagination-primary pagination-circle mg-b-0\">";
 			if($i != $this->halaman){ 
-				echo "<li class=\"active\"><a href=\"{$link}&hal={$i}\">{$i}</a></li>";
+				// echo "<li class=\"active\"><a href=\"{$link}&hal={$i}\">{$i}</a></li>";
+				echo "<li class=\"page-item\"><a href=\"{$link}&hal={$i}\" class=\"page-link\" data-ci-pagination-page=\"{$i}\">{$i}</a></li>";
 			} else {
-				echo "<li class=\"disable\"><a>{$i}</a></li>";
+				// echo "<li class=\"disable\"><a>{$i}</a></li>";
+				echo "<li class=\"page-item active\"><a class=\"page-link\">{$i}</a></li>";
 			}
 		}
 	}
