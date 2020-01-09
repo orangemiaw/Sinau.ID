@@ -21,6 +21,16 @@ $config['change_logs'] = array(
 	)
 );
 
+$config['payment'] = array(
+	'name'    => 'Payment',
+	'methods' => array(
+		array(
+			'name' => 'SUMMARY',
+			'key'  => 'index'
+		)
+	)
+);
+
 $config['account_profile'] = array(
 	'name'    => 'Account Profile',
 	'methods' => array(

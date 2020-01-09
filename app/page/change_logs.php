@@ -10,8 +10,12 @@ $ip         = isset($_GET['txtIP']) ? $_GET['txtIP'] : false;
 $date_form  = isset($_GET['txtDateFrom']) ? $_GET['txtDateFrom'] : false;
 $date_to    = isset($_GET['txtDateTo']) ? $_GET['txtDateTo'] : false;
 
-if($created_by)
-    $where['created_by'] = $created_by;
+if(!$_SESSION['is_admin']) {
+    $where['created_by'] = $_SESSION['username'];
+} else {
+    if($created_by)
+        $where['created_by'] = $created_by;
+}
 if($page)
     $where['page'] = $page;
 if($action)
@@ -48,12 +52,14 @@ $arr_change_log = $m_change_log->get_results($where, $page_number, $data_per_pag
             <form method="GET" action="<?=HTTP;?>">
                 <input type="hidden" name="page" value="module_group">
                 <div class="row row-sm">
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <label class="form-control-label">Created By</label>
-                            <input class="form-control" type="text" name="txtCreatedBy" value="<?=!empty($_GET['txtCreatedBy']) ? $_GET['txtCreatedBy'] : '';?>" placeholder="Created By">
+                    <?php if(isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == true): ?>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label class="form-control-label">Created By</label>
+                                <input class="form-control" type="text" name="txtCreatedBy" value="<?=!empty($_GET['txtCreatedBy']) ? $_GET['txtCreatedBy'] : '';?>" placeholder="Created By">
+                            </div>
                         </div>
-                    </div>
+                    <?php endif;?>
                     <div class="col-lg-2">
                         <div class="form-group">
                             <label class="form-control-label">Page</label>

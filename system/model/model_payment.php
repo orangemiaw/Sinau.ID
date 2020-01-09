@@ -71,6 +71,10 @@ class model_payment {
 		if (isset($where['payment_id'])) {
 			$arr['payment_id'] = $where['payment_id'];
 		}
+        
+		if (isset($where['participant_id'])) {
+			$arr['participant_id'] = $where['participant_id'];
+		}
 
 		if (isset($where['payment_method'])) {
 			$arr['LOWER(payment_method)'] = strtolower($where['payment_method']);

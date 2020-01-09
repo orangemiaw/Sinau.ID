@@ -243,6 +243,15 @@ if(!isset($_SESSION['login']) || $_SESSION['login'] == false) {
 						</ul>
 					</li>
 				<?php endif;?>
+
+				<?php if (isset($_SESSION['role']->payment)): ?>
+					<li class="br-menu-item">
+						<a class="br-menu-link" href="<?=HTTP.'?page=payment';?>">
+							<i class="menu-item-icon ion ion-ios-cash tx-24"></i>
+							<span class="menu-item-label">Payment</span>
+						</a>
+					</li>
+				<?php endif;?>
 			
 				<?php if (isset($_SESSION['role']->change_logs)): ?>
 					<li class="br-menu-item">
