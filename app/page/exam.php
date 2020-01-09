@@ -50,7 +50,7 @@ include ROOT."app/theme/header.php";
                     <?php if (!empty($arr_question)): ?>
                         <?php foreach($arr_question as $value): ?>
                             <div class="col-lg-12">
-                                <?=!empty($value['question_image']) ? print '<img src="' . HTTP . '/' . $value['question_image'] . '" width="300" />' : '';?>
+                                <?=!empty($value['question_image']) ? print '<img src="' . HTTP . '/' . $value['question_image'] . '" width="300" />' : '';?><br /><br />
                                 <b><?=$page_number;?>. <?=$value['question_text'];?></b><br /><br />
 								<input type="hidden" name="txtQuestionId" id="txtQuestionId" value="<?=$value['question_id']*1909;?>">
                             </div>

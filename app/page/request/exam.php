@@ -61,7 +61,7 @@ if($action == 'answer') {
         } else {
             if($json->confidence < 80) {
                 $answer_status = ANSWER_CHEATING;
-                $notice->addError("You detected cheating or asking for help from others. Your current answer change to wrong answer.");
+                $notice->addError("You detected cheating or asking for help from others with confidence " . $json->confidence . "%. Your current answer change to wrong answer.");
                 // ajax_output(array(), 400, array('location' => $redirection));
             } else {
                 $arr_answer    = $m_answer->get_row(array('question_id' => $question_id, 'answer_id' => $answer));

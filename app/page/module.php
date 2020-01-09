@@ -110,14 +110,14 @@ $arr_module     = $m_module->get_results($where, $page_number, $data_per_page);
                                     <?=timestamp_to_date($value['created']);?>
 
                                 </td>
-                                <td class="align-middle">
-                                    <strong><?=strtoupper($value['module_type']);?></strong>
+                                <td>
+                                    <strong><?=$value['module_type'];?></strong>
                                 </td>
-                                <td class="align-middle">
+                                <td>
                                     <?=$value['module_text'];?>
                                 </td>
                                 <td class="text-center align-middle">
-                                    <?=!empty($value['module_image']) ? '<img src="' . HTTP . '/' . $value['module_image'] . '" width="50" />' : 'No Image';?>
+                                    <?=!empty($value['module_image']) ? '<img src="' . HTTP . '/' . $value['module_image'] . '" width="100" />' : 'No Image';?>
                                 </td>
                                 <td class="text-center align-middle">
                                     <?=!empty($value['module_image']) ? '<a target="_blank" href="' . HTTP . '/' . $value['module_file'] . '">Download</a>' : 'No File';?>

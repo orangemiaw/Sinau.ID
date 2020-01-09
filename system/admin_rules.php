@@ -31,6 +31,16 @@ $config['config'] = array(
 	)
 );
 
+$config['payment'] = array(
+	'name'    => 'Payment',
+	'methods' => array(
+		array(
+			'name' => 'SUMMARY',
+			'key'  => 'index'
+		)
+	)
+);
+
 $config['account_profile'] = array(
 	'name'    => 'Account Profile',
 	'methods' => array(
@@ -63,10 +73,6 @@ $config['admin'] = array(
 		array(
 			'name' => 'DETAIL',
 			'key'  => 'detail'
-		),
-		array(
-			'name' => 'DELETE',
-			'key'  => 'delete'
 		),
 		array(
 			'name' => 'CHANGE PASSWORD',

@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>SINAU.ID</title>
+		<title><?=TITLE;?> - <?=JARGON;?></title>
 		<!-- Google font -->
 		<link href="https://fonts.googleapis.com/css?family=Lato:700%7CMontserrat:400,600" rel="stylesheet">
 		<!-- Bootstrap -->
@@ -23,7 +23,7 @@
 				<div class="navbar-header">
 					<!-- Logo -->
 					<div class="navbar-brand">
-						<a class="logo" href="index.html">
+						<a class="logo" href="<?=HTTP;?>">
 							<img src="<?=HTTP.'app/theme/home/img/logosinau.png';?>" alt="logo">
 						</a>
 					</div>
@@ -39,11 +39,11 @@
 				<!-- Navigation -->
 				<nav id="nav">
 					<ul class="main-menu nav navbar-nav navbar-right">
-						<li><a href="home.php">Home</a></li>
+						<li><a href="#">Home</a></li>
 						<li><a href="#">About</a></li>
 						<li><a href="#">Courses</a></li>
 						<li><a href="#">Premium</a></li>
-						<li><a href="contact.html">Contact</a></li>
+						<li><a href="mailto:hello@sinau.id">Contact</a></li>
 					</ul>
 				</nav>
 				<!-- /Navigation -->
@@ -368,7 +368,7 @@
 					<!-- footer logo -->
 					<div class="col-md-6">
 						<div class="footer-logo">
-							<a class="logo" href="index.html">
+							<a class="logo" href="<?=$HTTP;?>">
 								<img src="<?=HTTP.'app/theme/home/img/logosinau1.png';?>" alt="logo">
 							</a>
 						</div>
@@ -378,11 +378,11 @@
 					<!-- footer nav -->
 					<div class="col-md-6">
 						<ul class="footer-nav">
-							<li><a href="index.html">Home</a></li>
+							<li><a href="#">Home</a></li>
 							<li><a href="#">About</a></li>
 							<li><a href="#">Courses</a></li>
 							<li><a href="#">Premium</a></li>
-							<li><a href="contact.html">Contact</a></li>
+							<li><a href="mailto:hello@sinau.id">Contact</a></li>
 						</ul>
 					</div>
 					<!-- /footer nav -->
@@ -409,7 +409,7 @@
 					<!-- copyright -->
 					<div class="col-md-8 col-md-pull-4">
 						<div class="footer-copyright">
-							<span>&copy; Copyright 2020. All Rights Reserved. | SINAU.ID</i>
+							<span>&copy; Copyright 2020. All Rights Reserved. | <?=TITLE;?></i>
 						</div>
 					</div>
 					<!-- /copyright -->
