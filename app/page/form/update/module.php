@@ -14,15 +14,15 @@ if(!isset($_GET['id']) || empty($_GET['id'])) {
     return;
 }
 
-$title = "Update Question";
+$title = "Update Module";
 include ROOT."app/theme/header.php";
-include PATH_MODEL . 'model_question.php';
-include PATH_MODEL . 'model_question_type.php';
+include PATH_MODEL . 'model_module.php';
+include PATH_MODEL . 'model_module_type.php';
 
-$m_question     = new model_question($db);
-$m_type         = new model_question_type($db);
-$arr_question   = $m_question->get_row(array("question_id" => $_GET['id']/1909));
-if(!$arr_question) {
+$m_module     = new model_module($db);
+$m_type       = new model_module_type($db);
+$arr_module   = $m_module->get_row(array("module_id" => $_GET['id']/1909));
+if(!$arr_module) {
     $notice->addError("Data not found in our database !");
     header("location:".HTTP."?page=" . $_GET['detail']);
     return;
@@ -45,35 +45,45 @@ $arr_type  = $m_type->get_results(array(), 'all');
 			<div class="row">
                         <div class="col-md-12 tx-center">
                             <div class="form-group">
-                                <label class="form-control-label">Question Image </label><br />
-                                <img src="<?=$arr_question['question_image'] ? HTTP . $arr_question['question_image'] : HTTP . UNAVAILABLE_IMAGE;?>" width="300" />
+                                <label class="form-control-label">Module Image </label><br />
+                                <img src="<?=$arr_module['module_image'] ? HTTP . $arr_module['module_image'] : HTTP . UNAVAILABLE_IMAGE;?>" width="300" />
                             </div>
                         </div>
                         <div class="col-md-12">
 							<div class="form-group mg-b-0">
-								<label class="form-control-label">Question Text: <span class="tx-danger">*</span></label>
-								<input type="text" name="txtQuestion" class="form-control" value="<?=$arr_question['question_text'];?>" autofocus>
+								<label class="form-control-label">Module Text: <span class="tx-danger">*</span></label>
+								<input type="text" name="txtModule" class="form-control" value="<?=$arr_module['module_text'];?>" autofocus>
 								<ul class="fields-message"></ul>
 							</div>
 						</div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-control-label">Question Image </label>
+                                <label class="form-control-label">Module Image </label>
                                 <div class="custom-file">
-                                    <input type="file" name="image_file" class="custom-file-input" id="customFile" placeholder="Choose file" required autofocus>
+                                    <input type="file" name="image_file" class="custom-file-input" id="customFile" placeholder="Choose file" autofocus>
                                     <label class="custom-file-label" for="customFile">Choose file</label>
+                                </div>
+                                <ul class="fields-message"></ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Module File </label>
+                                <div class="custom-file">
+                                    <input type="file" name="module_file" class="custom-file-input" id="customFile2" placeholder="Choose file" autofocus>
+                                    <label class="custom-file-label" for="customFile2">Choose file</label>
                                 </div>
                                 <ul class="fields-message"></ul>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="form-control-label">Question Type <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">Module Type <span class="tx-danger">*</span></label>
                                 <select id="select-brand" name="cbGroup" class="form-control select-two" data-placeholder="-- Select --" >
                                     <option></option>
                                     <?php foreach ($arr_type as $value): ?>
-                                        <option value="<?php print $value['question_type_id'];?>" <?=set_select_disable($value['question_type_id'], $arr_question['question_type_id']);?> >
-                                            <?php print $value['question_type'] . ' (' . $value['question_group_name'] . ')';?>
+                                        <option value="<?php print $value['module_type_id'];?>" <?=set_select_disable($value['module_type_id'], $arr_module['module_type_id']);?> >
+                                            <?php print $value['module_type'] . ' (' . $value['module_group_name'] . ')';?>
                                         </option>
                                     <?php endforeach;?>
                                 </select>
@@ -85,8 +95,8 @@ $arr_type  = $m_type->get_results(array(), 'all');
 								<label class="form-control-label">Status: <span class="tx-danger">*</span></label>
 								<select class="form-control select-two" name="cbStatus" data-placeholder=" -- Pilih Status --" required>
 									<option></option>
-									<option value="<?=STATUS_ENABLE;?>" <?=set_select_disable(STATUS_ENABLE, $arr_question['question_status']);?>>Enable</option>
-									<option value="<?=STATUS_DISABLE;?>" <?=set_select_disable(STATUS_DISABLE, $arr_question['question_status']);?>>Disable</option>
+									<option value="<?=STATUS_ENABLE;?>" <?=set_select_disable(STATUS_ENABLE, $arr_module['module_status']);?>>Enable</option>
+									<option value="<?=STATUS_DISABLE;?>" <?=set_select_disable(STATUS_DISABLE, $arr_module['module_status']);?>>Disable</option>
 								</select>
 								<ul class="fields-message"></ul>
 							</div>
@@ -105,30 +115,30 @@ $arr_type  = $m_type->get_results(array(), 'all');
 	<div class="col-md-5 col-sm-12 mg-t-20 mg-md-t-0">
 
 		<div class="card shadow-base bd-0 mg-b-20">
-			<?php if (!empty($arr_question['updated']) && !empty($arr_question['updated_by']) && !empty($arr_question['created']) && !empty($arr_question['created_by'])): ?>
+			<?php if (!empty($arr_module['updated']) && !empty($arr_module['updated_by']) && !empty($arr_module['created']) && !empty($arr_module['created_by'])): ?>
 			<div class="card-body bg-transparent pd-0 bd-gray-200 mg-t-auto">
 				<div class="row no-gutters tx-center">
-					<?php if (!empty($arr_question['updated']) && !empty($arr_question['updated_by'])): ?>
+					<?php if (!empty($arr_module['updated']) && !empty($arr_module['updated_by'])): ?>
 					<div class="col pd-y-15">
 						<p class="mg-b-5 tx-uppercase tx-12 tx-mont tx-semibold">Terakhir Diubah</p>
 						<h4 class="tx-16 tx-bold mg-b-0 tx-inverse">
-							<?=strtoupper($arr_question['updated_by']);?>
+							<?=strtoupper($arr_module['updated_by']);?>
 						</h4>
 						<span class="tx-12 tx-primary tx-roboto">
-							<?=timestamp_to_date($arr_question['updated']);?>
+							<?=timestamp_to_date($arr_module['updated']);?>
 						</span>
 					</div>
 					<?php endif;?>
 
 
 					<div class="col pd-y-15 bd-l bd-gray-200">
-						<?php if (!empty($arr_question['created']) && !empty($arr_question['created_by'])): ?>
+						<?php if (!empty($arr_module['created']) && !empty($arr_module['created_by'])): ?>
 						<p class="mg-b-5 tx-uppercase tx-12 tx-mont tx-semibold">Dibuat</p>
 						<h4 class="tx-16 tx-inverse tx-bold mg-b-0">
-							<?=strtoupper($arr_question['created_by']);?>
+							<?=strtoupper($arr_module['created_by']);?>
 						</h4>
 						<span class="tx-12 tx-primary tx-roboto">
-							<?=timestamp_to_date($arr_question['created']);?>
+							<?=timestamp_to_date($arr_module['created']);?>
 						</span>
 					</div>
 					<?php endif;?>

@@ -43,7 +43,7 @@ if(!$arr_question) {
                 <div class="col-md-12 tx-center">
                     <div class="form-group">
                         <label class="form-control-label">Question Image </label><br />
-                        <img src="<?=$arr_data['profile_image'] ? HTTP . $arr_data['question_image'] : HTTP . UNAVAILABLE_IMAGE;?>" width="300" />
+                        <img src="<?=$arr_data['question_image'] ? HTTP . $arr_data['question_image'] : HTTP . UNAVAILABLE_IMAGE;?>" width="300" />
                     </div>
                 </div>
 				<div class="col-md-12">

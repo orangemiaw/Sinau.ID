@@ -8,11 +8,11 @@ if (!isset($_SESSION['role']->{$_GET['add']}->add)) {
     return;
 }
 
-$title = "Add Question";
+$title = "Add Module";
 include ROOT."app/theme/header.php";
-include PATH_MODEL . 'model_question_type.php';
+include PATH_MODEL . 'model_module_type.php';
 
-$m_type    = new model_question_type($db);
+$m_type    = new model_module_type($db);
 $arr_type  = $m_type->get_results(array(), 'all');
 
 ?>
@@ -30,16 +30,16 @@ $arr_type  = $m_type->get_results(array(), 'all');
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group mg-b-0">
-								<label class="form-control-label">Question Text: <span class="tx-danger">*</span></label>
-								<input type="text" name="txtQuestion" class="form-control" required autofocus>
+								<label class="form-control-label">Module Text: <span class="tx-danger">*</span></label>
+								<input type="text" name="txtModule" class="form-control" required autofocus>
 								<ul class="fields-message"></ul>
 							</div>
 						</div>
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-control-label">Question Image </label>
+                                <label class="form-control-label">Module Image <span class="tx-danger">*</span></label>
                                 <div class="custom-file">
-                                    <input type="file" name="image_file" class="custom-file-input" id="customFile" placeholder="Choose file" autofocus>
+                                    <input type="file" name="image_file" class="custom-file-input" id="customFile" placeholder="Choose file" required autofocus>
                                     <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
                                 <ul class="fields-message"></ul>
@@ -47,12 +47,22 @@ $arr_type  = $m_type->get_results(array(), 'all');
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-control-label">Question Type <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">Module File <span class="tx-danger">*</span></label>
+                                <div class="custom-file">
+                                    <input type="file" name="module_file" class="custom-file-input" id="customFile2" placeholder="Choose file" required autofocus>
+                                    <label class="custom-file-label" for="customFile2">Choose file</label>
+                                </div>
+                                <ul class="fields-message"></ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Module Type <span class="tx-danger">*</span></label>
                                 <select id="select-brand" name="cbGroup" class="form-control select-two" data-placeholder="-- Select --" >
                                     <option></option>
                                     <?php foreach ($arr_type as $value): ?>
-                                        <option value="<?php print $value['question_type_id'];?>" >
-                                            <?php print $value['question_type'] . ' (' . $value['question_group_name'] . ')';?>
+                                        <option value="<?php print $value['module_type_id'];?>" >
+                                            <?php print $value['module_type'] . ' (' . $value['module_group_name'] . ')';?>
                                         </option>
                                     <?php endforeach;?>
                                 </select>

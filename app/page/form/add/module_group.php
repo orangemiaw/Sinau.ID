@@ -8,12 +8,8 @@ if (!isset($_SESSION['role']->{$_GET['add']}->add)) {
     return;
 }
 
-$title = "Add Question";
+$title = "Add Module Group";
 include ROOT."app/theme/header.php";
-include PATH_MODEL . 'model_question_type.php';
-
-$m_type    = new model_question_type($db);
-$arr_type  = $m_type->get_results(array(), 'all');
 
 ?>
 <div class="br-mainpanel">
@@ -28,37 +24,14 @@ $arr_type  = $m_type->get_results(array(), 'all');
 			<form id="form-update" class="card shadow-base bd-0">
 				<div class="card-body">
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="form-group mg-b-0">
-								<label class="form-control-label">Question Text: <span class="tx-danger">*</span></label>
-								<input type="text" name="txtQuestion" class="form-control" required autofocus>
+								<label class="form-control-label">Group Name: <span class="tx-danger">*</span></label>
+								<input type="text" name="txtGroupName" class="form-control" required autofocus>
 								<ul class="fields-message"></ul>
 							</div>
 						</div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="form-control-label">Question Image </label>
-                                <div class="custom-file">
-                                    <input type="file" name="image_file" class="custom-file-input" id="customFile" placeholder="Choose file" autofocus>
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
-                                </div>
-                                <ul class="fields-message"></ul>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-control-label">Question Type <span class="tx-danger">*</span></label>
-                                <select id="select-brand" name="cbGroup" class="form-control select-two" data-placeholder="-- Select --" >
-                                    <option></option>
-                                    <?php foreach ($arr_type as $value): ?>
-                                        <option value="<?php print $value['question_type_id'];?>" >
-                                            <?php print $value['question_type'] . ' (' . $value['question_group_name'] . ')';?>
-                                        </option>
-                                    <?php endforeach;?>
-                                </select>
-                                <ul class="fields-message"></ul>
-                            </div>
-                        </div>
+
 						<div class="col-md-6">
 							<div class="form-group mg-b-0">
 								<label class="form-control-label">Status: <span class="tx-danger">*</span></label>
@@ -86,22 +59,14 @@ $arr_type  = $m_type->get_results(array(), 'all');
 $(document).ready(function() {
 	$('#form-update').on('submit', function(event){
 		event.preventDefault();
-		var request 	= '?do=<?=$_GET['add'] . '&act=add';?>',
-			form 		= $(this),
-            data    	= new FormData(this);
+		var request 	= '<?=$_GET['add'] . '&act=add';?>',
+			form 		= $(this);
 
 		loading(form, 'show');
-        $.ajax({
-            type: 'POST',
-            url: request,
-            data: data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function (result) {
-                init_meta(result.meta);
-                loading(form, 'hide');
-            }
+		ajax_post(request, form.serialize(), function(result) {
+
+			init_meta(result.meta);
+			loading(form, 'hide');
 		});
 	});
 

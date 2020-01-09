@@ -14,20 +14,20 @@ if(!isset($_GET['id']) || empty($_GET['id'])) {
     return;
 }
 
-$title = "Update Question";
+$title = "Update Module Type";
 include ROOT."app/theme/header.php";
-include PATH_MODEL . 'model_question.php';
-include PATH_MODEL . 'model_question_type.php';
+include PATH_MODEL . 'model_module_type.php';
+include PATH_MODEL . 'model_module_group.php';
 
-$m_question     = new model_question($db);
-$m_type         = new model_question_type($db);
-$arr_question   = $m_question->get_row(array("question_id" => $_GET['id']/1909));
-if(!$arr_question) {
+$m_module_type    = new model_module_type($db);
+$m_group          = new model_module_group($db);
+$arr_module_type  = $m_module_type->get_row(array("module_type_id" => $_GET['id']/1909));
+if(!$arr_module_type) {
     $notice->addError("Data not found in our database !");
     header("location:".HTTP."?page=" . $_GET['detail']);
     return;
 }
-$arr_type  = $m_type->get_results(array(), 'all');
+$arr_group  = $m_group->get_results(array(), 'all');
 
 ?>
 <div class="br-mainpanel">
@@ -43,55 +43,35 @@ $arr_type  = $m_type->get_results(array(), 'all');
 
 		<div class="card-body">
 			<div class="row">
-                        <div class="col-md-12 tx-center">
-                            <div class="form-group">
-                                <label class="form-control-label">Question Image </label><br />
-                                <img src="<?=$arr_question['question_image'] ? HTTP . $arr_question['question_image'] : HTTP . UNAVAILABLE_IMAGE;?>" width="300" />
-                            </div>
-                        </div>
-                        <div class="col-md-12">
+
+						<div class="col-md-12">
 							<div class="form-group mg-b-0">
-								<label class="form-control-label">Question Text: <span class="tx-danger">*</span></label>
-								<input type="text" name="txtQuestion" class="form-control" value="<?=$arr_question['question_text'];?>" autofocus>
+								<label class="form-control-label">Type Name: <span class="tx-danger">*</span></label>
+								<input type="text" name="txtName" class="form-control" value="<?=$arr_module_type['module_type'];?>" required autofocus>
 								<ul class="fields-message"></ul>
 							</div>
 						</div>
-                        <div class="col-md-12">
+						<div class="col-md-6">
+							<div class="form-group mg-b-0">
+								<label class="form-control-label">Module Total: <span class="tx-danger">*</span></label>
+								<input type="number" name="txTotal" class="form-control" value="<?=$arr_module_type['total'];?>" required autofocus>
+								<ul class="fields-message"></ul>
+							</div>
+						</div>
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label class="form-control-label">Question Image </label>
-                                <div class="custom-file">
-                                    <input type="file" name="image_file" class="custom-file-input" id="customFile" placeholder="Choose file" required autofocus>
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
-                                </div>
-                                <ul class="fields-message"></ul>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="form-control-label">Question Type <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">Module Group </label>
                                 <select id="select-brand" name="cbGroup" class="form-control select-two" data-placeholder="-- Select --" >
                                     <option></option>
-                                    <?php foreach ($arr_type as $value): ?>
-                                        <option value="<?php print $value['question_type_id'];?>" <?=set_select_disable($value['question_type_id'], $arr_question['question_type_id']);?> >
-                                            <?php print $value['question_type'] . ' (' . $value['question_group_name'] . ')';?>
+                                    <?php foreach ($arr_group as $value): ?>
+                                        <option value="<?php print $value['module_group_id'];?>" <?=set_select($value['module_group_id'], $arr_module_type['module_group_id']);?> >
+                                            <?php print $value['module_group_name'];?>
                                         </option>
                                     <?php endforeach;?>
                                 </select>
                                 <ul class="fields-message"></ul>
                             </div>
                         </div>
-						<div class="col-md-6">
-							<div class="form-group mg-b-0">
-								<label class="form-control-label">Status: <span class="tx-danger">*</span></label>
-								<select class="form-control select-two" name="cbStatus" data-placeholder=" -- Pilih Status --" required>
-									<option></option>
-									<option value="<?=STATUS_ENABLE;?>" <?=set_select_disable(STATUS_ENABLE, $arr_question['question_status']);?>>Enable</option>
-									<option value="<?=STATUS_DISABLE;?>" <?=set_select_disable(STATUS_DISABLE, $arr_question['question_status']);?>>Disable</option>
-								</select>
-								<ul class="fields-message"></ul>
-							</div>
-						</div>
-
 			</div>
 		</div>
 		<div class="card-footer bd-color-gray-lighter text-right">
@@ -105,30 +85,30 @@ $arr_type  = $m_type->get_results(array(), 'all');
 	<div class="col-md-5 col-sm-12 mg-t-20 mg-md-t-0">
 
 		<div class="card shadow-base bd-0 mg-b-20">
-			<?php if (!empty($arr_question['updated']) && !empty($arr_question['updated_by']) && !empty($arr_question['created']) && !empty($arr_question['created_by'])): ?>
+			<?php if (!empty($arr_module_type['updated']) && !empty($arr_module_type['updated_by']) && !empty($arr_module_type['created']) && !empty($arr_module_type['created_by'])): ?>
 			<div class="card-body bg-transparent pd-0 bd-gray-200 mg-t-auto">
 				<div class="row no-gutters tx-center">
-					<?php if (!empty($arr_question['updated']) && !empty($arr_question['updated_by'])): ?>
+					<?php if (!empty($arr_module_type['updated']) && !empty($arr_module_type['updated_by'])): ?>
 					<div class="col pd-y-15">
 						<p class="mg-b-5 tx-uppercase tx-12 tx-mont tx-semibold">Terakhir Diubah</p>
 						<h4 class="tx-16 tx-bold mg-b-0 tx-inverse">
-							<?=strtoupper($arr_question['updated_by']);?>
+							<?=strtoupper($arr_module_type['updated_by']);?>
 						</h4>
 						<span class="tx-12 tx-primary tx-roboto">
-							<?=timestamp_to_date($arr_question['updated']);?>
+							<?=timestamp_to_date($arr_module_type['updated']);?>
 						</span>
 					</div>
 					<?php endif;?>
 
 
 					<div class="col pd-y-15 bd-l bd-gray-200">
-						<?php if (!empty($arr_question['created']) && !empty($arr_question['created_by'])): ?>
+						<?php if (!empty($arr_module_type['created']) && !empty($arr_module_type['created_by'])): ?>
 						<p class="mg-b-5 tx-uppercase tx-12 tx-mont tx-semibold">Dibuat</p>
 						<h4 class="tx-16 tx-inverse tx-bold mg-b-0">
-							<?=strtoupper($arr_question['created_by']);?>
+							<?=strtoupper($arr_module_type['created_by']);?>
 						</h4>
 						<span class="tx-12 tx-primary tx-roboto">
-							<?=timestamp_to_date($arr_question['created']);?>
+							<?=timestamp_to_date($arr_module_type['created']);?>
 						</span>
 					</div>
 					<?php endif;?>
@@ -147,22 +127,15 @@ $(document).ready(function() {
 
 	$('#form-update').on('submit', function(event){
 		event.preventDefault();
-		var request 	= '?do=<?=$_GET['update'] . '&act=update&id=' . $_GET['id'];?>',
-			form 		= $(this),
-            data    	= new FormData(this);
+		var request 	= '<?=$_GET['update'] . '&act=update&id=' . $_GET['id'];?>',
+			form 		= $(this);
 
 		loading(form, 'show');
-        $.ajax({
-            type: 'POST',
-            url: request,
-            data: data,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function (result) {
-                init_meta(result.meta);
-                loading(form, 'hide');
-            }
+		ajax_post(request, form.serialize(), function(result) {
+
+			init_meta(result.meta);
+			get_action_log();
+			loading(form, 'hide');
 		});
 	});
 

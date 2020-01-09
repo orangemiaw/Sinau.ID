@@ -40,6 +40,12 @@ if(!$arr_module) {
 
 		<div class="card-body">
 			<div class="row">
+                <div class="col-md-12 tx-center">
+                    <div class="form-group">
+                        <label class="form-control-label">Question Image </label><br />
+                        <img src="<?=$arr_data['module_image'] ? HTTP . $arr_data['module_image'] : HTTP . UNAVAILABLE_IMAGE;?>" width="300" />
+                    </div>
+                </div>
 				<div class="col-md-12">
 					<div class="form-group">
 						<label class="form-control-label">Module: </label>
