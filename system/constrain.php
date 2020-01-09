@@ -27,3 +27,4 @@ define('PATH_KTP', 'app/files/ktp/');
 define('PATH_CAPTURE', 'app/files/captures/');
 define('PATH_MODEL', 'system/model/');
 define('DEFAULT_PROFILE_IMAGE', 'app/files/images/default_profile.jpg');
+define('UNAVAILABLE_IMAGE', 'app/files/images/no_image.png');
