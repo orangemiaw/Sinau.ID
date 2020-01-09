@@ -10,7 +10,7 @@ $group          = isset($_POST['cbGroup']) ? $_POST['cbGroup'] : '';
 
 switch($action) {
     case 'add':
-        if(!empty($name) && !empty($status)) {
+        if(!empty($name) && !empty($total) && !empty($group)) {
             $name_available = $m_module_type->get_row(array("module_type" => $name));
             if($name_available) {
                 $callback['noty'] = array('type' => 'error', 'text' => 'Type name already used !');
@@ -41,7 +41,7 @@ switch($action) {
         ajax_output('', 400, $callback);
         break;
     case 'update':
-        if(!empty($name) && !empty($status) && !empty($id)) {
+        if(!empty($name) && !empty($total) && !empty($group) && !empty($id)) {
             $name_available = $m_module_type->get_row(array("module_type" => $name));
             if($name_available && $id != $name_available['module_type_id']) {
                 $callback['noty'] = array('type' => 'error', 'text' => 'Group name already used !');
