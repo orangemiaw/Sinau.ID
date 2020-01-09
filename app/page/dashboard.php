@@ -163,7 +163,7 @@ $arr_payment = $m_payment->get_results(array(), 1, 10);
                                         <?php if ($value['payment_method'] == PAYPAL_PAYMENT_METHOD): ?>
                                             <span class="badge badge-info">PayPal</span>
                                         <?php elseif ($value['payment_method'] == OVO_PAYMENT_METHOD): ?>
-                                            <span class="badge badge-info">OVO</span>
+                                            <span class="badge badge-danger">OVO</span>
                                         <?php endif;?>
                                     </td>
                                     <td class="align-middle">

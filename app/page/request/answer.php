@@ -14,7 +14,7 @@ $status         = isset($_POST['cbStatus']) ? $_POST['cbStatus'] : ANSWER_INCORR
 
 switch($action) {
     case 'add':
-        if(!empty($text) && !empty($question_id) && !empty($answer_id) && !empty($status)) {
+        if(!empty($text) && !empty($question_id) && !empty($answer_id)) {
             $arr_question = $m_question->get_row(array("question_id" => $question_id));
             if(!$arr_question) {
                 $callback['noty'] = array('type' => 'error', 'text' => 'Question not found !');
@@ -61,7 +61,7 @@ switch($action) {
         ajax_output('', 400, $callback);
         break;
     case 'update':
-        if(!empty($text) && !empty($question_id) && !empty($answer_id) && !empty($status) && !empty($_question_id) && !empty($_answer_id)) {
+        if(!empty($text) && !empty($question_id) && !empty($answer_id) && !empty($_question_id) && !empty($_answer_id)) {
             $arr_question = $m_question->get_row(array("question_id" => $question_id));
             if(!$arr_question) {
                 $callback['noty'] = array('type' => 'error', 'text' => 'Question not found !');

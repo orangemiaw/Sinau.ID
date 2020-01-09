@@ -23,12 +23,17 @@
 
 <?php
 $change_log_path = !empty($_GET['update']) ? $_GET['update'] : $_GET['page'];
+if(preg_match("/update=answer&question_id=/i", $_SERVER['QUERY_STRING'])) {
+	$change_log_url = HTTP . "?do=answer&act=update&question_id=" . $_GET['question_id'] . "&answer_id=" . $_GET['answer_id'];
+} else {
+	$change_log_url = HTTP . "?do=" . $change_log_path . "&act=update&id=" . $_GET['id'];
+}
 ?>
 
 <script type="text/javascript">
 function get_action_log() {
 	var query = {
-        url     : '<?=HTTP . "?do=" . $change_log_path . "&act=update&id=" . $_GET['id'];?>'
+        url     : '<?=$change_log_url;?>'
 	};
 
 	ajax_get('change_log', query, function(result) {
