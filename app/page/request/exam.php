@@ -59,7 +59,7 @@ if($action == 'answer') {
             $notice->addError("You already answered this question before.");
             ajax_output(array(), 400, array('location' => $redirection));
         } else {
-            if($json->confidence < 80) {
+            if($json->confidence < 75) {
                 $answer_status = ANSWER_CHEATING;
                 $notice->addError("You detected cheating or asking for help from others with confidence " . $json->confidence . "%. Your current answer change to wrong answer.");
                 // ajax_output(array(), 400, array('location' => $redirection));
