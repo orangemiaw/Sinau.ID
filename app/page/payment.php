@@ -3,14 +3,15 @@ $title = "Payment History";
 include ROOT."app/theme/header.php";
 require_once PATH_MODEL . 'model_payment.php';
 
-$name   = isset($_GET['txtName']) ? $_GET['txtName'] : false;
-$login  = isset($_GET['txtLogin']) ? $_GET['txtLogin'] : false;
+$name   = isset($_GET['cbPayment']) ? $_GET['cbPayment'] : false;
 $status = isset($_GET['cbStatus']) ? $_GET['cbStatus'] : false;
 
+if($_SESSION['is_admin'] == false) {
+    $where['participant_id'] = $_SESSION['id'];
+}
+
 if($name)
-    $where['payment_name'] = $name;
-if($login)
-    $where['payment_login'] = $login;
+    $where['payment_method'] = $name;
 if($status)
     $where['payment_status'] = $status;
 
@@ -38,24 +39,20 @@ $arr_payment    = $m_payment->get_results($where, $page_number, $data_per_page);
                 <form method="GET" action="<?=HTTP;?>">
                     <input type="hidden" name="page" value="payment">
                     <div class="row row-sm">
-
-                    
                         <div class="col-lg-2">
                             <div class="form-group">
-                                <label class="form-control-label">Login :</label>
-                                <input name="txtLogin" value="<?=!empty($_GET['txtLogin']) ? $_GET['txtLogin'] : '';?>" class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label class="form-control-label">Name :</label>
-                                <input name="txtName" value="<?=!empty($_GET['txtName']) ? $_GET['txtName'] : '';?>" class="form-control" type="text">
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label class="form-control-label">Status :</label>
+                                <label class="form-control-label">Payment Status :</label>
                                 <input name="txtStatus" value="<?=!empty($_GET['txtStatus']) ? $_GET['txtStatus'] : '';?>" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label class="form-control-label">Payment Method :</label>
+                                <select name="cbPayment" class="form-control select2" data-placeholder="-- Pilih Status --">
+                                    <option value="">All</option>
+                                    <option value="<?=PAYPAL_PAYMENT_METHOD;?>" <?php echo set_select(PAYPAL_PAYMENT_METHOD, $_GET['cbPayment']); ?>>PayPal</option>
+                                    <option value="<?=OVO_PAYMENT_METHOD;?>" <?php echo set_select(OVO_PAYMENT_METHOD, $_GET['cbPayment']); ?>>OVO</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-2">
@@ -76,9 +73,9 @@ $arr_payment    = $m_payment->get_results($where, $page_number, $data_per_page);
                                 <th>Updated<br>Created</th>
                                 <th>Transaction ID</th>
                                 <th>Invoice ID</th>
-                                <th>Payment Method</th>
+                                <th class="text-center">Payment Method</th>
                                 <th>Payment Amount</th>
-                                <th>Payment Status</th>
+                                <th class="text-center">Payment Status</th>
                             </tr>
                         </thead>
                         <tbody>

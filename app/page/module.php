@@ -38,7 +38,7 @@ $arr_module     = $m_module->get_results($where, $page_number, $data_per_page);
                     <div class="row row-sm">
                         <div class="col-lg-2">
                             <div class="form-group">
-                                <label class="form-control-label">module</label>
+                                <label class="form-control-label">Module</label>
                                 <input type="text" name="txtModule" class="form-control" placeholder="module" value="<?=!empty($_GET['txtModule']) ? $_GET['txtModule'] : '';?>">
                             </div>
                         </div>
