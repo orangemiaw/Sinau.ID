@@ -3,7 +3,7 @@
 class upload {
     private $errors = [];
     private $image_extensions = ['jpeg','jpg','png','gif'];
-    private $file_extensions = ['7zip','rar','zip','pdf','mp4'];
+    private $file_extensions = ['doc','docx','xls','xlsx','ppt','pptx','rar','zip','pdf','mp4'];
 
     public function go($name, $path) {
         $file_name      = $_FILES[$name]['name'];
@@ -60,7 +60,7 @@ class upload {
         if (!in_array($file_extension, $this->file_extensions)) {
             $this->errors[] = "This file extension is not allowed.";
         }
-        if ($fileSize > 20000000) {
+        if ($fileSize > 2000000000) {
             $this->errors[] = "This file is more than 2MB. Sorry, it has to be less than or equal to 20MB.";
         }
         if (empty($this->errors)) {

@@ -81,11 +81,13 @@ $arr_module     = $m_module->get_results($where, $page_number, $data_per_page);
                             <tr>
                                 <th class="min-w align-middle">Created<br>Updated</th>
                                 <th class="align-middle">Module Type</th>
-                                <th class="align-middle">Module Text</th>
+                                <th class="align-middle">Module Info</th>
                                 <th class="text-center align-middle">Module Image</th>
                                 <th class="text-center align-middle">Module Download</th>
-                                <th class="text-center align-middle">Status</th>
-                                <th class="text-center align-middle">Action</th>
+                                <?php if($_SESSION['is_admin'] == true): ?>
+                                    <th class="text-center align-middle">Status</th>
+                                    <th class="text-center align-middle">Action</th>
+                                <?php endif;?>
                             </tr>
                         </thead>
                         <tbody>
@@ -120,32 +122,34 @@ $arr_module     = $m_module->get_results($where, $page_number, $data_per_page);
                                 <td class="text-center align-middle">
                                     <?=!empty($value['module_image']) ? '<a target="_blank" href="' . HTTP . '/' . $value['module_file'] . '">Download</a>' : 'No File';?>
                                 </td>
-                                <td class="align-middle text-center">
-                                    <?php if ($value['module_status'] == STATUS_ENABLE): ?>
-                                        <span class="badge badge-success">Enable</span>
-                                    <?php elseif ($value['module_status'] == STATUS_DISABLE): ?>
-                                        <span class="badge badge-info">Disable</span>
-                                    <?php endif;?>
-                                </td>
-                                <td class="min-w text-center align-middle">
-                                    <?php if (isset($_SESSION['role']->{$_GET['page']}->update)): ?>
-                                        <a href="<?=HTTP . '?update=module&id=' . $value['module_id']*1909;?>" class="btn btn-outline-primary btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Ubah">
-                                            <div class="tx-20"><i class="icon ion-md-create"></i></div>
-                                        </a>
-                                    <?php endif;?>
+                                <?php if($_SESSION['is_admin'] == true): ?>
+                                    <td class="align-middle text-center">
+                                        <?php if ($value['module_status'] == STATUS_ENABLE): ?>
+                                            <span class="badge badge-success">Enable</span>
+                                        <?php elseif ($value['module_status'] == STATUS_DISABLE): ?>
+                                            <span class="badge badge-info">Disable</span>
+                                        <?php endif;?>
+                                    </td>
+                                    <td class="min-w text-center align-middle">
+                                        <?php if (isset($_SESSION['role']->{$_GET['page']}->update)): ?>
+                                            <a href="<?=HTTP . '?update=module&id=' . $value['module_id']*1909;?>" class="btn btn-outline-primary btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Ubah">
+                                                <div class="tx-20"><i class="icon ion-md-create"></i></div>
+                                            </a>
+                                        <?php endif;?>
 
-                                    <?php if (isset($_SESSION['role']->{$_GET['page']}->detail)): ?>
-                                        <a href="<?=HTTP . '?detail=module&id=' . $value['module_id']*1909;?>" class="btn btn-outline-info btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Detail">
-                                            <div class="tx-20"><i class="icon ion-md-camera"></i></div>
+                                        <?php if (isset($_SESSION['role']->{$_GET['page']}->detail)): ?>
+                                            <a href="<?=HTTP . '?detail=module&id=' . $value['module_id']*1909;?>" class="btn btn-outline-info btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Detail">
+                                                <div class="tx-20"><i class="icon ion-md-camera"></i></div>
+                                            </a>
+                                        <?php endif;?>
+                                        
+                                        <?php if (isset($_SESSION['role']->{$_GET['page']}->delete) && $value['module_name'] != 'Super Admin'): ?>
+                                        <a href="javascript:;" onclick="deleteConfirm('<?=HTTP . '?do=module&act=delete&id=' . $value['module_id']*1909;?>');" class="btn btn-outline-danger btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Delete">
+                                            <div class="tx-20"><i class="ion ion-md-trash"></i></div>
                                         </a>
-                                    <?php endif;?>
-                                    
-									<?php if (isset($_SESSION['role']->{$_GET['page']}->delete) && $value['module_name'] != 'Super Admin'): ?>
-									<a href="javascript:;" onclick="deleteConfirm('<?=HTTP . '?do=module&act=delete&id=' . $value['module_id']*1909;?>');" class="btn btn-outline-danger btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Delete">
-										<div class="tx-20"><i class="ion ion-md-trash"></i></div>
-									</a>
-									<?php endif;?>
-                                </td>
+                                        <?php endif;?>
+                                    </td>
+                                <?php endif;?>
                             </tr>
 
                             <?php endforeach;?>
