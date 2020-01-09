@@ -60,7 +60,7 @@ $arr_type  = $m_type->get_results(array(), 'all');
                             <div class="form-group">
                                 <label class="form-control-label">Question Image </label>
                                 <div class="custom-file">
-                                    <input type="file" name="image_file" class="custom-file-input" id="customFile" placeholder="Choose file" required autofocus>
+                                    <input type="file" name="image_file" class="custom-file-input" id="customFile" placeholder="Choose file" autofocus>
                                     <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
                                 <ul class="fields-message"></ul>
@@ -161,6 +161,7 @@ $(document).ready(function() {
             processData: false,
             success: function (result) {
                 init_meta(result.meta);
+				get_action_log();
                 loading(form, 'hide');
             }
 		});

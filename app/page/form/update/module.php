@@ -171,6 +171,7 @@ $(document).ready(function() {
             processData: false,
             success: function (result) {
                 init_meta(result.meta);
+				get_action_log();
                 loading(form, 'hide');
             }
 		});
