@@ -90,6 +90,14 @@ class model_change_log {
 			$arr['created_by'] = $where['created_by'];
 		}
 
+		if (isset($where['date_form'])) {
+			$arr['created >= '] = $where['date_form'];
+		}
+
+		if (isset($where['date_to'])) {
+			$arr['created <= '] = $where['date_to'];
+		}
+
 		if (isset($where['controller'])) {
 			$arr['controller'] = $where['controller'];
 		}

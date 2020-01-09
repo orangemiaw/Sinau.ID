@@ -3,13 +3,25 @@ $title = "Change Log";
 include ROOT."app/theme/header.php";
 require_once PATH_MODEL . 'model_change_log.php';
 
-$name   = isset($_GET['txtName']) ? $_GET['txtName'] : false;
-$status = isset($_GET['cbStatus']) ? $_GET['cbStatus'] : false;
+$created_by = isset($_GET['txtCreatedBy']) ? $_GET['txtCreatedBy'] : false;
+$page       = isset($_GET['txtPage']) ? $_GET['txtPage'] : false;
+$action     = isset($_GET['txtAction']) ? $_GET['txtAction'] : false;
+$ip         = isset($_GET['txtIP']) ? $_GET['txtIP'] : false;
+$date_form  = isset($_GET['txtDateFrom']) ? $_GET['txtDateFrom'] : false;
+$date_to    = isset($_GET['txtDateTo']) ? $_GET['txtDateTo'] : false;
 
-if($name)
-    $where['change_log_name'] = $name;
-if($status)
-    $where['change_log_status'] = $status;
+if($created_by)
+    $where['created_by'] = $created_by;
+if($page)
+    $where['page'] = $page;
+if($action)
+    $where['action'] = $action;
+if($ip)
+    $where['ip'] = $ip;
+if($date_form)
+    $where['date_form'] = date_to_timestamp($date_form);
+if($date_to)
+    $where['date_to'] = date_to_timestamp($date_to);
 
 $m_change_log   = new model_change_log($db);
 $page_number    = is_numeric($_GET['hal']) ? $_GET['hal'] : 1;
