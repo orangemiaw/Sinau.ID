@@ -21,14 +21,14 @@ switch($action) {
             }
 
             if(!empty($_FILES["image_file"]["name"])) {
-                $doUpload = $upload->go('image_file', PATH_KTP);
+                $doUpload = $upload->go('image_file', PATH_QUESTION);
                 if($doUpload['status'] == false) { 
                     $callback['noty'] = array('type' => 'error', 'text' => $doUpload['errors']);
                     ajax_output('', 400, $callback);
                     return;
                 }
 
-                $question_image = PATH_KTP . $doUpload['file'];
+                $question_image = PATH_QUESTION . $doUpload['file'];
             }
 
             $fields = array(
@@ -67,14 +67,14 @@ switch($action) {
             }
 
             if(!empty($_FILES["image_file"]["name"])) {
-                $doUpload = $upload->go('image_file', PATH_KTP);
+                $doUpload = $upload->go('image_file', PATH_QUESTION);
                 if($doUpload['status'] == false) { 
                     $callback['noty'] = array('type' => 'error', 'text' => $doUpload['errors']);
                     ajax_output('', 400, $callback);
                     return;
                 }
 
-                $question_image = PATH_KTP . $doUpload['file'];
+                $question_image = PATH_QUESTION . $doUpload['file'];
             }
 
             $fields = array(
