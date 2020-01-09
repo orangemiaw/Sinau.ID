@@ -145,10 +145,12 @@ $arr_module_group   = $m_module_group->get_results($where, $page_number, $data_p
                 <?php if($total_rows > $data_per_page): ?>
                     <div class="ht-80 d-flex align-items-center justify-content-center">
                         <nav aria-label="Page navigation">
-                            <?php
-                            $pagination = new pagination($data_per_page);
-                            $pagination->pagination($total_rows, HTTP . "?page=" . $_GET['page']);
-                            ?>
+                            <ul class="pagination pagination-primary pagination-circle mg-b-0">
+                                <?php
+                                $pagination = new pagination($data_per_page);
+                                $pagination->pagination($total_rows, HTTP . "?page=" . $_GET['page']);
+                                ?>
+                            </ul>
                         </nav>
                     </div>
                 <?php endif;?>
