@@ -56,6 +56,7 @@ Sinau.id sendiri memiliki fitur pembayaran dengan teknologi fintech terbarukan s
 - Configuration
 - Answers
 - Homepage
+- Forgot Password
 
 ## Development Status
 Masih tahap development, akan segera online secepatnya.
