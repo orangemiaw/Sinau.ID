@@ -24,6 +24,7 @@ define('PATH_ANSWERS', 'app/files/answers/');
 define('PATH_QUESTION', 'app/files/questions/');
 define('PATH_MODULE', 'app/files/modules/');
 define('PATH_KTP', 'app/files/ktp/');
+define('PATH_IMAGE', 'app/files/images/');
 define('PATH_CAPTURE', 'app/files/captures/');
 define('PATH_MODEL', 'system/model/');
 define('DEFAULT_PROFILE_IMAGE', 'app/files/images/default_profile.jpg');
