@@ -12,7 +12,7 @@ if(isset($_SESSION['login'])) {
 <head>
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
-	<title><?=TITLE;?> - Forgot password</title>
+	<title><?=TITLE;?> - Forgot Password</title>
 	<link href="<?=HTTP.'app/theme/assets/img/icon.png';?>" rel="shortcut icon">
 	<link rel="stylesheet" href="<?=HTTP.'app/theme/assets/lib/font-awesome/css/font-awesome.css';?>">
 	<link rel="stylesheet" href="<?=HTTP.'app/theme/assets/lib/Ionicons/css/ionicons.css';?>">
@@ -33,7 +33,7 @@ if(isset($_SESSION['login'])) {
 <body>
 	<div class="single-layout d-flex align-items-center justify-content-center bg-br-primary ht-100v">
     
-        <form action="<?=HTTP."?do=login";?>" method="post" id="login" class="login-wrapper wd-300 wd-xs-400 pd-25 pd-xs-40 bg-white rounded shadow-base">
+        <form action="<?=HTTP."?do=forgot_password";?>" method="post" id="login" class="login-wrapper wd-300 wd-xs-400 pd-25 pd-xs-40 bg-white rounded shadow-base">
 
             <div class="signin-logo tx-center tx-30 tx-bold tx-inverse">
                 <span class="tx-normal"><img src="<?=HTTP.'app/theme/assets/img/logo-main.png';?>" width="200"></span>
@@ -55,7 +55,9 @@ if(isset($_SESSION['login'])) {
             </div>
 
 
-            <button class="btn btn-primary btn-block" type="submit">Reset password <i class="ion ion-md-log-in"></i></button>
+			<button class="btn btn-primary btn-block" type="submit">Reset password <i class="ion ion-md-log-in"></i></button>
+			
+            <div class="mg-t-20 tx-center">Sudah mengingat password? <a href="<?=HTTP.'?page=login';?>" class="tx-success">Login</a></div>
             
 
 	    </form>

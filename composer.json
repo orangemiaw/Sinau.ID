@@ -1,6 +1,7 @@
 {
     "require": {
         "lintangtimur/ovoid": "v1.2.4.3",
-        "paypal/rest-api-sdk-php": "^1.13"
+        "paypal/rest-api-sdk-php": "^1.13",
+        "phpmailer/phpmailer": "^6.1"
     }
 }

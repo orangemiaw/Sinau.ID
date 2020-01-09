@@ -200,4 +200,8 @@ function image_base64($img_file) {
 	return $src;
 }
 
+function generate_token() {
+	return sha1(md5(time() . "-sinauid"));
+}
+
 ?>

@@ -112,6 +112,10 @@ class model_participant {
 			$arr['p.participant_login'] = $where['participant_login'];
 		}
 
+		if (isset($where['participant_email'])) {
+			$arr['p.participant_email'] = $where['participant_email'];
+		}
+
 		if (isset($where['participant_password'])) {
 			$arr['p.participant_password'] = $where['participant_password'];
 		}

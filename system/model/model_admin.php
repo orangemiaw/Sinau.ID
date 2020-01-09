@@ -117,6 +117,10 @@ class model_admin {
 			$arr['a.admin_login'] = $where['admin_login'];
 		}
 
+		if (isset($where['admin_email'])) {
+			$arr['a.admin_email'] = $where['admin_email'];
+		}
+
 		if (isset($where['admin_password'])) {
 			$arr['a.admin_password'] = $where['admin_password'];
 		}

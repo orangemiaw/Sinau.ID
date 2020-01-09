@@ -153,7 +153,7 @@ class db {
 	        $query.= " WHERE ";
 	        $i = 0;
 	        foreach($where as $key => $value) {
-	            $query.= $key." = ".$this->q($value);
+	            $query.= $key." = '".$this->q($value)."'";
 	            if ($i < count($where) - 1) {
 	                $query.= " AND ";
 	            }
