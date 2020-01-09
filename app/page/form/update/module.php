@@ -82,7 +82,7 @@ $arr_type  = $m_type->get_results(array(), 'all');
                                 <select id="select-brand" name="cbGroup" class="form-control select-two" data-placeholder="-- Select --" >
                                     <option></option>
                                     <?php foreach ($arr_type as $value): ?>
-                                        <option value="<?php print $value['module_type_id'];?>" <?=set_select_disable($value['module_type_id'], $arr_module['module_type_id']);?> >
+                                        <option value="<?php print $value['module_type_id'];?>" <?=set_select($value['module_type_id'], $arr_module['module_type_id']);?> >
                                             <?php print $value['module_type'] . ' (' . $value['module_group_name'] . ')';?>
                                         </option>
                                     <?php endforeach;?>
@@ -95,8 +95,8 @@ $arr_type  = $m_type->get_results(array(), 'all');
 								<label class="form-control-label">Status: <span class="tx-danger">*</span></label>
 								<select class="form-control select-two" name="cbStatus" data-placeholder=" -- Pilih Status --" required>
 									<option></option>
-									<option value="<?=STATUS_ENABLE;?>" <?=set_select_disable(STATUS_ENABLE, $arr_module['module_status']);?>>Enable</option>
-									<option value="<?=STATUS_DISABLE;?>" <?=set_select_disable(STATUS_DISABLE, $arr_module['module_status']);?>>Disable</option>
+									<option value="<?=STATUS_ENABLE;?>" <?=set_select(STATUS_ENABLE, $arr_module['module_status']);?>>Enable</option>
+									<option value="<?=STATUS_DISABLE;?>" <?=set_select(STATUS_DISABLE, $arr_module['module_status']);?>>Disable</option>
 								</select>
 								<ul class="fields-message"></ul>
 							</div>

@@ -10,14 +10,26 @@ class model_answer {
         $this->db = $dbconnect;
     }
 
-    public function total_rows() {
-        $this->db->go("SELECT * FROM " . $this->table_name);
+    public function total_rows($where = array()) {
+        $query  = "SELECT a.question_id, a.created, a.updated, a.created_by, a.updated_by, a.answer_id, a.answer_text, a.answer_image, a.status, q.question_text";
+        $query .= " FROM " . $this->table_name . " a ";
+        $query .= " JOIN questions q ON a.question_id = q.question_id ";
+        
+	    if (count($where) > 0) {
+            $queryWhere = $this->where($where);
+            if($queryWhere) {
+                $query .= $queryWhere;
+            }
+        }
+
+        $this->db->go($query);
         return $this->db->numRows();
     }
 
-    public function get_results($where = array(), $page = 1, $show = 25, $order_val = 'ASC', $order_key = 'answer_text') {
-        $query  = "SELECT question_id, created, updated, created_by, updated_by, answer_id, answer_text, answer_image, status";
-        $query .= " FROM " . $this->table_name . " ";
+    public function get_results($where = array(), $page = 1, $show = 25, $order_val = 'ASC', $order_key = 'a.question_id') {
+        $query  = "SELECT a.question_id, a.created, a.updated, a.created_by, a.updated_by, a.answer_id, a.answer_text, a.answer_image, a.status, q.question_text";
+        $query .= " FROM " . $this->table_name . " a ";
+        $query .= " JOIN questions q ON a.question_id = q.question_id ";
 
 	    if (count($where) > 0) {
             $queryWhere = $this->where($where);
@@ -45,8 +57,9 @@ class model_answer {
     }
 
     public function get_row($where = array()) {
-        $query  = "SELECT question_id, created, updated, created_by, updated_by, answer_id, answer_text, answer_image, status";
-        $query .= " FROM " . $this->table_name . " ";
+        $query  = "SELECT a.question_id, a.created, a.updated, a.created_by, a.updated_by, a.answer_id, a.answer_text, a.answer_image, a.status, q.question_text";
+        $query .= " FROM " . $this->table_name . " a ";
+        $query .= " JOIN questions q ON a.question_id = q.question_id ";
 
 	    if (count($where) > 0) {
             $queryWhere = $this->where($where);
@@ -69,15 +82,19 @@ class model_answer {
         $arr = array();
         
 		if (isset($where['question_id'])) {
-			$arr['question_id'] = $where['question_id'];
+			$arr['a.question_id'] = $where['question_id'];
+		}
+        
+		if (isset($where['answer_id'])) {
+			$arr['a.answer_id'] = $where['answer_id'];
 		}
 
 		if (isset($where['answer_text'])) {
-			$arr['LOWER(answer_text)'] = strtolower($where['answer_text']);
+			$arr['LOWER(a.answer_text)'] = strtolower($where['answer_text']);
 		}
 
 		if (isset($where['status'])) {
-			$arr['status'] = $where['status'];
+			$arr['a.status'] = $where['status'];
 		}
 
         if (count($arr) > 0) {

@@ -8,26 +8,27 @@ if (!isset($_SESSION['role']->{$_GET['update']}->update)) {
     return;
 }
 
-if(!isset($_GET['id']) || empty($_GET['id'])) {
+if(!isset($_GET['question_id']) || empty($_GET['question_id']) || !isset($_GET['answer_id']) || empty($_GET['answer_id'])) {
     $notice->addError("Parameter id can't be empty !");
+    header("location:".HTTP."?page=" . $_GET['update']);
+    return; 
+}
+
+$title = "Update Answer";
+include ROOT."app/theme/header.php";
+include PATH_MODEL . 'model_answer.php';
+include PATH_MODEL . 'model_question.php';
+
+$m_answer   = new model_answer($db);
+$m_question = new model_question($db);
+$arr_answer = $m_answer->get_row(array("question_id" => $_GET['question_id']/1909, "answer_id" => $_GET['answer_id']/1909));
+if(!$arr_answer) {
+    $notice->addError("Data not found in our database !");
     header("location:".HTTP."?page=" . $_GET['update']);
     return;
 }
 
-$title = "Update Question";
-include ROOT."app/theme/header.php";
-include PATH_MODEL . 'model_question.php';
-include PATH_MODEL . 'model_question_type.php';
-
-$m_question     = new model_question($db);
-$m_type         = new model_question_type($db);
-$arr_question   = $m_question->get_row(array("question_id" => $_GET['id']/1909));
-if(!$arr_question) {
-    $notice->addError("Data not found in our database !");
-    header("location:".HTTP."?page=" . $_GET['detail']);
-    return;
-}
-$arr_type  = $m_type->get_results(array(), 'all');
+$arr_question  = $m_question->get_results(array(), 'all');
 
 ?>
 <div class="br-mainpanel">
@@ -45,20 +46,34 @@ $arr_type  = $m_type->get_results(array(), 'all');
 			<div class="row">
                         <div class="col-md-12 tx-center">
                             <div class="form-group">
-                                <label class="form-control-label">Question Image </label><br />
-                                <img src="<?=$arr_question['question_image'] ? HTTP . $arr_question['question_image'] : HTTP . UNAVAILABLE_IMAGE;?>" width="300" />
+                                <label class="form-control-label">Answer Image </label><br />
+                                <img src="<?=$arr_answer['answer_image'] ? HTTP . $arr_answer['answer_image'] : HTTP . UNAVAILABLE_IMAGE;?>" width="300" />
                             </div>
                         </div>
                         <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-control-label">Question </label>
+                                <select id="select-brand" name="cbGroup" class="form-control select-two" data-placeholder="-- Select --" >
+                                    <option></option>
+                                    <?php foreach ($arr_question as $value): ?>
+                                        <option value="<?php print $value['question_id'];?>" <?=set_select($value['question_id'], $arr_answer['question_id']);?>>
+                                            <?php print $value['question_type'] . ' - ' . $value['question_text'];?>
+                                        </option>
+                                    <?php endforeach;?>
+                                </select>
+                                <ul class="fields-message"></ul>
+                            </div>
+                        </div>
+						<div class="col-md-12">
 							<div class="form-group mg-b-0">
-								<label class="form-control-label">Question Text: <span class="tx-danger">*</span></label>
-								<input type="text" name="txtQuestion" class="form-control" value="<?=$arr_question['question_text'];?>" autofocus>
+								<label class="form-control-label">Answer Text <span class="tx-danger">*</span></label>
+								<input type="text" name="txtAnswer" class="form-control" value="<?=$arr_answer['answer_text'];?>" required autofocus>
 								<ul class="fields-message"></ul>
 							</div>
 						</div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="form-control-label">Question Image </label>
+                                <label class="form-control-label">Answer Image </label>
                                 <div class="custom-file">
                                     <input type="file" name="image_file" class="custom-file-input" id="customFile" placeholder="Choose file" autofocus>
                                     <label class="custom-file-label" for="customFile">Choose file</label>
@@ -66,27 +81,27 @@ $arr_type  = $m_type->get_results(array(), 'all');
                                 <ul class="fields-message"></ul>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="form-control-label">Question Type <span class="tx-danger">*</span></label>
-                                <select id="select-brand" name="cbGroup" class="form-control select-two" data-placeholder="-- Select --" >
-                                    <option></option>
-                                    <?php foreach ($arr_type as $value): ?>
-                                        <option value="<?php print $value['question_type_id'];?>" <?=set_select($value['question_type_id'], $arr_question['question_type_id']);?> >
-                                            <?php print $value['question_type'] . ' (' . $value['question_group_name'] . ')';?>
-                                        </option>
-                                    <?php endforeach;?>
-                                </select>
-                                <ul class="fields-message"></ul>
-                            </div>
-                        </div>
+						<div class="col-md-6">
+							<div class="form-group mg-b-0">
+								<label class="form-control-label">Answer Code: <span class="tx-danger">*</span></label>
+								<select class="form-control select-two" name="cbAnswer" data-placeholder=" -- Pilih Status --" required>
+									<option></option>
+									<option value="1" <?=set_select("1", $arr_answer['answer_id']);?>>A</option>
+									<option value="2" <?=set_select("2", $arr_answer['answer_id']);?>>B</option>
+									<option value="3" <?=set_select("3", $arr_answer['answer_id']);?>>C</option>
+									<option value="4" <?=set_select("4", $arr_answer['answer_id']);?>>D</option>
+									<option value="5" <?=set_select("5", $arr_answer['answer_id']);?>>E</option>
+								</select>
+								<ul class="fields-message"></ul>
+							</div>
+						</div>
 						<div class="col-md-6">
 							<div class="form-group mg-b-0">
 								<label class="form-control-label">Status: <span class="tx-danger">*</span></label>
 								<select class="form-control select-two" name="cbStatus" data-placeholder=" -- Pilih Status --" required>
 									<option></option>
-									<option value="<?=STATUS_ENABLE;?>" <?=set_select_disable(STATUS_ENABLE, $arr_question['question_status']);?>>Enable</option>
-									<option value="<?=STATUS_DISABLE;?>" <?=set_select_disable(STATUS_DISABLE, $arr_question['question_status']);?>>Disable</option>
+									<option value="<?=ANSWER_CORRECT;?>" <?=set_select(ANSWER_CORRECT, $arr_answer['status']);?>>Correct</option>
+									<option value="<?=ANSWER_INCORRECT;?>" <?=set_select(ANSWER_INCORRECT, $arr_answer['status']);?>>Incorrect</option>
 								</select>
 								<ul class="fields-message"></ul>
 							</div>
@@ -105,30 +120,30 @@ $arr_type  = $m_type->get_results(array(), 'all');
 	<div class="col-md-5 col-sm-12 mg-t-20 mg-md-t-0">
 
 		<div class="card shadow-base bd-0 mg-b-20">
-			<?php if (!empty($arr_question['updated']) && !empty($arr_question['updated_by']) && !empty($arr_question['created']) && !empty($arr_question['created_by'])): ?>
+			<?php if (!empty($arr_answer['updated']) && !empty($arr_answer['updated_by']) && !empty($arr_answer['created']) && !empty($arr_answer['created_by'])): ?>
 			<div class="card-body bg-transparent pd-0 bd-gray-200 mg-t-auto">
 				<div class="row no-gutters tx-center">
-					<?php if (!empty($arr_question['updated']) && !empty($arr_question['updated_by'])): ?>
+					<?php if (!empty($arr_answer['updated']) && !empty($arr_answer['updated_by'])): ?>
 					<div class="col pd-y-15">
 						<p class="mg-b-5 tx-uppercase tx-12 tx-mont tx-semibold">Terakhir Diubah</p>
 						<h4 class="tx-16 tx-bold mg-b-0 tx-inverse">
-							<?=strtoupper($arr_question['updated_by']);?>
+							<?=strtoupper($arr_answer['updated_by']);?>
 						</h4>
 						<span class="tx-12 tx-primary tx-roboto">
-							<?=timestamp_to_date($arr_question['updated']);?>
+							<?=timestamp_to_date($arr_answer['updated']);?>
 						</span>
 					</div>
 					<?php endif;?>
 
 
 					<div class="col pd-y-15 bd-l bd-gray-200">
-						<?php if (!empty($arr_question['created']) && !empty($arr_question['created_by'])): ?>
+						<?php if (!empty($arr_answer['created']) && !empty($arr_answer['created_by'])): ?>
 						<p class="mg-b-5 tx-uppercase tx-12 tx-mont tx-semibold">Dibuat</p>
 						<h4 class="tx-16 tx-inverse tx-bold mg-b-0">
-							<?=strtoupper($arr_question['created_by']);?>
+							<?=strtoupper($arr_answer['created_by']);?>
 						</h4>
 						<span class="tx-12 tx-primary tx-roboto">
-							<?=timestamp_to_date($arr_question['created']);?>
+							<?=timestamp_to_date($arr_answer['created']);?>
 						</span>
 					</div>
 					<?php endif;?>
@@ -147,7 +162,7 @@ $(document).ready(function() {
 
 	$('#form-update').on('submit', function(event){
 		event.preventDefault();
-		var request 	= '?do=<?=$_GET['update'] . '&act=update&id=' . $_GET['id'];?>',
+		var request 	= '?do=<?=$_GET['update'] . '&act=update&question_id=' . $_GET['question_id'] . '&answer_id=' . $_GET['answer_id'];?>',
 			form 		= $(this),
             data    	= new FormData(this);
 
