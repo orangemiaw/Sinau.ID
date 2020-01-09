@@ -136,6 +136,8 @@ $arr_admin  = $m_admin->get_results($where, $page_number, $data_per_page);
                                         <span class="badge badge-success">Enable</span>
                                     <?php elseif ($value['admin_status'] == STATUS_DISABLE): ?>
                                         <span class="badge badge-info">Disable</span>
+                                    <?php elseif ($value['admin_status'] == STATUS_TERMINATE): ?>
+                                        <span class="badge badge-danger">Terminate</span>
                                     <?php endif;?>
                                 </td>
                                 <td class="align-middle">
@@ -144,23 +146,25 @@ $arr_admin  = $m_admin->get_results($where, $page_number, $data_per_page);
                                     <a target="_blank" href="https://demo.ip-api.com/json/<?=$value['admin_last_ip'];?>"><?=$value['admin_last_ip'];?></a>
                                 </td>
                                 <td class="min-w text-center align-middle">
-                                    <?php if (isset($_SESSION['role']->{$_GET['page']}->update)): ?>
-                                        <a href="<?=HTTP . '?update=' . $_GET['page'] . '&id=' . $value['admin_id']*1909;?>" class="btn btn-outline-primary btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Ubah">
-                                            <div class="tx-20"><i class="icon ion-md-create"></i></div>
-                                        </a>
-                                    <?php endif;?>
+                                    <?php if($value['admin_status'] != STATUS_TERMINATE): ?>
+                                        <?php if (isset($_SESSION['role']->{$_GET['page']}->update)): ?>
+                                            <a href="<?=HTTP . '?update=' . $_GET['page'] . '&id=' . $value['admin_id']*1909;?>" class="btn btn-outline-primary btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Ubah">
+                                                <div class="tx-20"><i class="icon ion-md-create"></i></div>
+                                            </a>
+                                        <?php endif;?>
 
-                                    <?php if (isset($_SESSION['role']->{$_GET['page']}->detail)): ?>
-                                        <a href="<?=HTTP . '?detail=' . $_GET['page'] . '&id=' . $value['admin_id']*1909;?>" class="btn btn-outline-info btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Detail">
-                                            <div class="tx-20"><i class="icon ion-md-camera"></i></div>
+                                        <?php if (isset($_SESSION['role']->{$_GET['page']}->detail)): ?>
+                                            <a href="<?=HTTP . '?detail=' . $_GET['page'] . '&id=' . $value['admin_id']*1909;?>" class="btn btn-outline-info btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Detail">
+                                                <div class="tx-20"><i class="icon ion-md-camera"></i></div>
+                                            </a>
+                                        <?php endif;?>
+                                        
+                                        <?php if (isset($_SESSION['role']->{$_GET['page']}->terminate)): ?>
+                                        <a href="javascript:;" onclick="terminateConfirm('<?=HTTP . '?do=' . $_GET['page'] . '&act=terminate&id=' . $value['admin_id']*1909;?>');" class="btn btn-outline-danger btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Terminate">
+                                            <div class="tx-20"><i class="ion ion-md-trash"></i></div>
                                         </a>
+                                        <?php endif;?>
                                     <?php endif;?>
-                                    
-									<?php if (isset($_SESSION['role']->{$_GET['page']}->terminate)): ?>
-									<a href="javascript:;" onclick="terminateConfirm('<?=HTTP . '?do=' . $_GET['page'] . '&act=terminate&id=' . $value['admin_id']*1909;?>');" class="btn btn-outline-danger btn-icon rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Terminate">
-										<div class="tx-20"><i class="ion ion-md-trash"></i></div>
-									</a>
-									<?php endif;?>
                                 </td>
                             </tr>
 

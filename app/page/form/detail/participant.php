@@ -131,6 +131,27 @@ $arr_group	    = $m_group->get_results(array(), 'all');
                                 <ul class="fields-message"></ul>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Last Login</label>
+                                <input class="form-control" type="text" placeholder="Last Login" value="<?=timestamp_to_date($arr_data['participant_last_login']);?>">
+                                <ul class="fields-message"></ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Last IP </label>
+                                <input class="form-control" type="text" placeholder="Last IP" value="<?=$arr_data['participant_last_ip'];?>">
+                                <ul class="fields-message"></ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label">Last Browser </label>
+                                <input class="form-control" type="text" placeholder="Last Browser" value="<?=$arr_data['participant_last_browser'];?>">
+                                <ul class="fields-message"></ul>
+                            </div>
+                        </div>
 						<div class="col-md-6">
 							<div class="form-group mg-b-0">
 								<label class="form-control-label">Status: <span class="tx-danger">*</span></label>
