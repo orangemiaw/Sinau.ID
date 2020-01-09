@@ -86,7 +86,7 @@ $arr_type  = $m_type->get_results(array(), 'all');
 $(document).ready(function() {
 	$('#form-update').on('submit', function(event){
 		event.preventDefault();
-		var request 	= '<?=$_GET['add'] . '&act=add';?>',
+		var request 	= '?do=<?=$_GET['add'] . '&act=add';?>',
 			form 		= $(this),
             data    	= new FormData(this);
 
