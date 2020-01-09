@@ -40,7 +40,4 @@ $security 	= new security();
 /** Security configuration */
 $security->secureMe($conf["activate_firewall"]);
 
-/** Load merchant */
-// include "system/merchant/paypal.php";
-
 ?>
