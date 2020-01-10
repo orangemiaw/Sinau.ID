@@ -10,6 +10,9 @@ Developed by :
 - Mahmud Zakaria A (17.11.1356)
 - Boy Candra W (17.11.1378)
 
+## Demo Website
+https://sinauid.xhat.io
+
 ## Anti-Cheating Technology
 Dengan menerapkan teknologi Face Recognition (AI Computer Vision) website yang kami buwat dapat mendeteksi kecurangan pada saat ujian secara online berjalan.
 
@@ -51,8 +54,5 @@ Sinau.id sendiri memiliki fitur pembayaran dengan teknologi fintech terbarukan s
 
 ***Dan masih banyak fitur lainya :)***
 
-## In Progress
-- Answers (Need to fix change logs on update)
-
 ## Development Status
-Masih tahap development, akan segera online secepatnya.
+98% all done, just need fixing some issue.
