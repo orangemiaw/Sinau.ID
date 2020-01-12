@@ -53,6 +53,3 @@ Sinau.id sendiri memiliki fitur pembayaran dengan teknologi fintech terbarukan s
 ![Support OVO Payment Method](app/files/screenshot/ovo.JPG)
 
 ***Dan masih banyak fitur lainya :)***
-
-## Development Status
-98% all done, just need fixing some issue.
