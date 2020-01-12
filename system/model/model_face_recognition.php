@@ -3,30 +3,37 @@
 defined('SINAUID') OR exit('No direct script access allowed');
 
 class model_face_recognition extends curl {
-    public function proccess($image1, $image2) {
-		// $image_url1 = str_replace('./', base_url(), $image1);
-		// $image_url2 = str_replace('./', base_url(), $image2);
+    private function auth($base_url, $login, $password) {
+        $post = array(
+            "login"     => rtrim($login),
+            "password"  => rtrim($password)
+        );
 
-        // Testing
-		// $image_test1 = 'https://cdn2.tstatic.net/surabaya/foto/bank/images/ktp-meritha-vridawati_20180109_015246.jpg';
-		// $image_test2 = 'http://cdn2.tstatic.net/tribunnews/foto/bank/images/tewas_20180108_131714.jpg';
+        $req = $this->post($base_url . '/authenticate', $post);
+        $json = json_decode($req);
+        
+        if($json->meta->code == 200) {
+            return $json->data->access_token;
+        }
 
-		// $post = array(
-        //     'api_key'       => FACE_API_KEY, 
-        //     'api_secret'    => FACE_API_SECRET, 
-        //     'image_url1'    => $image_test1, 
-        //     'image_url2'    => $image_test2
-        // );
+        return false;
+    }
 
-        // Real production
+    public function proccess($base_url, $login, $password, $image1, $image2) {
+        // Get AuthToken
+        $token = $this->auth($base_url, $login, $password);
+        if(!$token) {
+            return false;
+        }
+
+        // Compare image
 		$post = array(
-            'api_key'           => FACE_API_KEY, 
-            'api_secret'        => FACE_API_SECRET, 
             'image_base64_1'    => $image1, 
             'image_base64_2'    => $image2
         );
 
-		$req = $this->post('https://api-us.faceplusplus.com/facepp/v3/compare', $post);
+        $this->setHeader('Authorization', 'Bearer ' . $token);
+        $req = $this->post($base_url . '/face_comparing', $post);
 		return $req;
     }
 }

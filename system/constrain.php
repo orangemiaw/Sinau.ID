@@ -19,9 +19,6 @@ define('ANSWER_CHEATING', 2);
 define('PAYPAL_LIVE', 0);
 define('PAYPAL_DEBUG', 1);
 
-define('FACE_API_KEY', 'gC9CHnYWsww_i9-gDQyiBv4yv0Tijr0o');
-define('FACE_API_SECRET', 'JuWcBZOeS8pyCiNJZgFLwK2j7Ftzo7wK');
-
 define('RATE_USD_TO_IDR', 14000);
 define('PATH_ANSWERS', 'app/files/answers/');
 define('PATH_QUESTION', 'app/files/questions/');

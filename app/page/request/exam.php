@@ -6,6 +6,7 @@ include PATH_MODEL . 'model_question_type.php';
 include PATH_MODEL . 'model_answer.php';
 include PATH_MODEL . 'model_exam.php';
 include PATH_MODEL . 'model_exam_status.php';
+include PATH_MODEL . 'model_config.php';
 include PATH_MODEL . 'model_face_recognition.php';
 
 $m_participant      = new model_participant($db);
@@ -14,6 +15,7 @@ $m_question_type    = new model_question_type($db);
 $m_answer           = new model_answer($db);
 $m_exam             = new model_exam($db);
 $m_exam_status      = new model_exam_status($db);
+$m_config           = new model_config($db);
 $m_fr               = new model_face_recognition();
 
 $question_type_id   = is_numeric($_GET['id']) ? $_GET['id']/1909 : '';
@@ -37,15 +39,21 @@ if($action == 'answer') {
 	$success = file_put_contents($file, $data);
     
     $arr_participant = $m_participant->get_row(array("participant_id" => $_SESSION['id']));
-    $detect = $m_fr->proccess(image_base64($arr_participant['profile_image']), image_base64($file));
+    $arr_config = $m_config->get_row();
+    $detect = $m_fr->proccess($arr_config['faceai_server'], $arr_config['faceai_login'], $arr_config['faceai_password'], image_base64($arr_participant['profile_image']), image_base64($file));
+
+    var_dump($detect);
+    die();
+
     $json = json_decode($detect);
 
-    if(!empty($json->error_message)) {
-        $notice->addError("Face detection error ! " . $json->error_message);
+    if(!$detect) {
+        $notice->addError("Face detection connection time out. Try again ! ");
         ajax_output(array(), 400, array('location' => '?page=exam&id=' . $question_type_id*1909 . '&hal=' . $question_no));
-    } elseif(!empty($json->confidence)) {
-
-        // $arr_question   = $m_question->get_row(array('question_type_id' => $question_type_id), $question_no, 1);
+    } elseif($json->meta->code != 200) {
+        $notice->addError("Face detection error ! " . $json->meta->message);
+        ajax_output(array(), 400, array('location' => '?page=exam&id=' . $question_type_id*1909 . '&hal=' . $question_no));
+    } elseif(!empty($json->data)) {
         $arr_type       = $m_question_type->get_row(array('question_type_id' => $question_type_id));
         $total_question = $arr_type['total'];
         if($question_no < $total_question) {
@@ -59,10 +67,12 @@ if($action == 'answer') {
             $notice->addError("You already answered this question before.");
             ajax_output(array(), 400, array('location' => $redirection));
         } else {
-            if($json->confidence < 75) {
+            if($json->data->compare[0]->is_match == false) {
                 $answer_status = ANSWER_CHEATING;
-                $notice->addError("You detected cheating or asking for help from others with confidence " . $json->confidence . "%. Your current answer change to wrong answer.");
-                // ajax_output(array(), 400, array('location' => $redirection));
+                $notice->addError("You detected cheating, beacouse your face not same with your uploaded Card ID. Your current answer change to wrong answer.");
+            } elseif($json->data->compare[0]->face_found > 1) {
+                $answer_status = ANSWER_CHEATING;
+                $notice->addError("You detected cheating, becaouse asking for help from others. Your current answer change to wrong answer.");
             } else {
                 $arr_answer    = $m_answer->get_row(array('question_id' => $question_id, 'answer_id' => $answer));
                 $answer_status = $answer['satatus'];
@@ -85,7 +95,6 @@ if($action == 'answer') {
             }
 
             // Calculate grade
-            // $total_correct  = count($m_exam->get_results(array('participant_id' => $_SESSION['id'], 'status' => ANSWER_CORRECT)));
             $total_correct  = $m_exam->get_status($_SESSION['id'], ANSWER_INCORRECT);
             $total_answered = count($m_exam->get_results(array('participant_id' => $_SESSION['id'])));
             $grade = (100 / $total_question) * $total_correct;
