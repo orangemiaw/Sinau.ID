@@ -14,7 +14,7 @@ Developed by :
 https://sinauid.xhat.io
 
 ## Anti-Cheating Technology
-Dengan menerapkan teknologi Face Recognition (AI Computer Vision) website yang kami buwat dapat mendeteksi kecurangan pada saat ujian secara online berjalan.
+Dengan menerapkan teknologi Face Recognition (AI Computer Vision) website yang kami buwat dapat mendeteksi kecurangan pada saat ujian secara online berjalan. Teknologi Face Recognition yang kami gunakan untuk mendeteksi kecurangan ini merupakan salah satu fitur yang dimiliki oleh FaceAI (https://faceai.id), kami menggunakan fitur face comparingnya sebagai dasar anti-cheating aplikasi ini. ***Big thanks for FaceAI :)***
 
 ## Supported Payment Method
 Sinau.id sendiri memiliki fitur pembayaran dengan teknologi fintech terbarukan saat ini.
