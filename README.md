@@ -10,6 +10,10 @@ Developed by :
 - Mahmud Zakaria A (17.11.1356)
 - Boy Candra W (17.11.1378)
 
+### Donate
+- Jika proyek ini sangat membantu anda untuk pengembangan aplikasi dan anda ingin mendukung saya, Anda dapat memberi saya secangkir kopi :)
+- [![Donation](https://img.shields.io/badge/bitcoin-donate-yellow.svg)](https://blockchain.info/id/address/1EKgiVqAvMnenGwuV8yvkvzfgMPUx18VBH)
+
 ## Demo Website
 https://sinauid.xhat.io
 
@@ -52,4 +56,6 @@ Sinau.id sendiri memiliki fitur pembayaran dengan teknologi fintech terbarukan s
 ***Gambar 8. Support OVO Payment Method***
 ![Support OVO Payment Method](app/files/screenshot/ovo.JPG)
 
-***Dan masih banyak fitur lainya :)***
+## Disclaimer
+
+***Note: modifications, changes, or alterations to this sourcecode is acceptable, however,any public releases utilizing this code must be approved by writen this application.***
